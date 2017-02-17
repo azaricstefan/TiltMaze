@@ -26,8 +26,8 @@ public class BPDialog2 extends DialogFragment {
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         ((GameActivity)getActivity())
-                                .getController()
-                                .saveDrawing( getActivity());
+                                .getController().getModel()
+                                .savePolygon("" , getActivity()); //TODO: name of polygon?!
                         getActivity().finish();
                     }
                 })

@@ -4,10 +4,13 @@
     android:id="@+id/activity_new_terrain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.azaric.tiltmaze.NewTerrainActivity">
+
+    <com.azaric.tiltmaze.NewTerrainImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/new_terrain_image_view"/>
+
+
 
 </RelativeLayout>

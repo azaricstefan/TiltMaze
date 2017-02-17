@@ -14,7 +14,8 @@ import com.azaric.tiltmaze.MainActivity;
 
 
 /**
- * Created by Stefan on 15-Jan-17.
+ * Created by Stefan on 15-Jan-17 | 23:28.
+ * Created in project with name: "Tiltmaze"
  */
 
 public class BackPressedDialog extends DialogFragment {
@@ -39,8 +40,8 @@ public class BackPressedDialog extends DialogFragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         ((GameActivity)getActivity())
-                                .getController()
-                                .saveDrawing(input.getText().toString(), getActivity());
+                                .getController().getModel()
+                                .savePolygon(input.getText().toString(), getActivity());
                         getActivity().finish();
                         //TODO: update ListView sa novim crtezom!
                     }

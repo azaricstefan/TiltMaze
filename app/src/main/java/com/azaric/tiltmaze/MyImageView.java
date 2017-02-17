@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
@@ -14,9 +15,16 @@ import android.widget.ImageView;
  */
 public class MyImageView extends ImageView{
 
-    private static final String DEBUG_TAG = "TAG";
+
     Controller controller;
-    Model model;
+    Polygon model;
+    Paint paintRed=new Paint();
+    Paint paintOrange=new Paint();
+    Paint paintGreen=new Paint();
+    Paint paintWhite=new Paint();
+    Paint paintGray=new Paint();
+
+
     Paint paint=new Paint();
     Paint paintBlue=new Paint();
     public MyImageView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -39,66 +47,52 @@ public class MyImageView extends ImageView{
         this.controller = controller;
     }
 
-    public Model getModel() {
+    public Polygon getModel() {
         return model;
     }
 
-    public void setModel(Model model) {
+    public void setModel(Polygon model) {
         this.model = model;
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        model.setHeight(h);
-        model.setWidth(w);
+        if(model!=null) {
+            model.setHeight(h);
+            model.setWidth(w);
+            invalidate();
+        }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        paint.setColor(Color.RED);
-        paintBlue.setColor(Color.BLUE);
+        Log.d("draw", "draw");
+        paintRed.setColor(Color.RED);
+        paintGreen.setColor(Color.GREEN);
+        paintWhite.setColor(Color.YELLOW);
+        paintOrange.setColor(Color.MAGENTA);
+        paintGray.setColor(Color.BLACK);
 
-        for(int i=0; i<model.num; i++)
+        float width=model.getWidth();
+        float height=model.getHeight();
+
+        for (Wall wall : model.getWalls())
+            canvas.drawRect((float) wall.getxS() * width, (float) wall.getyS() * height,
+                    (float) wall.getxE() * width, (float) wall.getyE() * height, paintGray);
+
+        for(Point h:model.getHoles())
         {
-            canvas.drawCircle(
-                    (float)model.getCircles(i).getX()*model.getWidth(),
-                    (float)model.getCircles(i).getY()*model.getHeight(),
-                    (float)model.getCircles(i).getR()*model.getR(),
-                    paint);
+            canvas.drawCircle((float) h.getX() * width, (float) h.getY() * height, (float) model.getR() * height, paintOrange);
         }
-
-        if(model.index != -1) {
-            Circle circle = model.getCircles(model.index);
-            if(circle.y - circle.r == 0)
-                circle.y = circle.r;
-            if(circle.x - circle.r == 0) circle.x = circle.r;
-
-            canvas.drawCircle(
-                    (float) circle.getX() * model.getWidth(),
-                    (float) circle.getY() * model.getHeight(),
-                    (float) circle.getR() * model.getR(),
-                    paintBlue);
-        }
+        if(model.getEndPoint()!=null)
+            canvas.drawCircle((float)model.getEndPoint().getX()*width, (float)model.getEndPoint().getY()*height,
+                    (float)model.getR()*height,paintGreen);
+        if(model.getStartPoint()!=null)
+            canvas.drawCircle((float)model.getStartPoint().getX()*width, (float)model.getStartPoint().getY()*height,
+                    (float)model.getrBall()*height,paintWhite);
     }
 
-    protected float[] fillCurrentCoordinates(MotionEvent event) {
-        float[] coords = new float[2 * event.getPointerCount()];
 
-        for (int pointerNum = 0; pointerNum < event.getPointerCount(); pointerNum++) {
-            coords[2 * pointerNum] = event.getX(pointerNum);
-            coords[2 * pointerNum + 1] = event.getY(pointerNum);
-        }
-        return  coords;
-    }
-
-    protected float[] fillID(MotionEvent event) {
-        float[] ids = new float[event.getPointerCount()];
-
-        for (int pointerNum = 0; pointerNum < event.getPointerCount(); pointerNum++){
-            ids[pointerNum] = event.getPointerId(pointerNum);
-        }
-        return ids;
-    }
 }

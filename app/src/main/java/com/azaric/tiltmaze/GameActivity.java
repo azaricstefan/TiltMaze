@@ -1,29 +1,19 @@
 package com.azaric.tiltmaze;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.View;
-
-import com.azaric.tiltmaze.Dialog.BPDialog2;
-import com.azaric.tiltmaze.Dialog.BackPressedDialog;
 
 public class GameActivity extends Activity
         implements
         SensorEventListener {
 
-    boolean[] played=new boolean[3];
-    Intent services;
     Controller controller;
-    Model model;
+    Polygon model;
 
 
     SensorManager sensorManager;
@@ -34,9 +24,10 @@ public class GameActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+
         //create model and controller
         controller = new Controller();
-        model = new Model();
+        model = new Polygon();
         controller.setModel(model);
 
         //create imageView and connect it with model and controller
@@ -55,12 +46,11 @@ public class GameActivity extends Activity
         Intent intent = getIntent();
         controller.nameOfDrawingToLoad = intent.getStringExtra(MainActivity.NAME_OF_DRAWING);
         if (controller.nameOfDrawingToLoad != null) {
-            controller.loadDrawing(controller.nameOfDrawingToLoad, getApplicationContext());
-            Log.d("LOAD DRAWING", "Name of drawing: " + controller.nameOfDrawingToLoad);
+            controller. loadPolygon(controller.nameOfDrawingToLoad, getApplicationContext());
         }
 
 
-        model.findNearestCircle(100,100); //TODO: JUST DEBUG for moving the ball! DELETE LATER!
+
     }
 
     @Override
@@ -92,7 +82,7 @@ public class GameActivity extends Activity
 
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() {/*
         if(controller.nameOfDrawingToLoad!=null)
         {
             DialogFragment backPressedDialog = new BPDialog2();
@@ -102,7 +92,8 @@ public class GameActivity extends Activity
         {
             DialogFragment backPressedDialog = new BackPressedDialog();
             backPressedDialog.show(getFragmentManager(), "BackPressedDialogTadWithoutName");
-        }
+        }*/
+        //TODO nznm sta treba za backPress
         //super.onBackPressed();
     }
 

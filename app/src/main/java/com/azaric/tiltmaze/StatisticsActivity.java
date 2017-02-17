@@ -7,12 +7,18 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.azaric.tiltmaze.DB.DbOperationsHelper;
+
 public class StatisticsActivity extends Activity {
+
+    DbOperationsHelper dbOperationsHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+
+        dbOperationsHelper = new DbOperationsHelper(this);
     }
 
     @Override
@@ -27,9 +33,11 @@ public class StatisticsActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.delete_statistic_for_selected_polygon:
                 //TODO: DELETE STATISTICS FOR SELECTED POLYGON and return main activity
+                dbOperationsHelper.resetStatistic(item.getItemId()); //DEBUG
                 return true;
             case R.id.delete_all_statistics:
                 //TODO: DELETE ALL STATISTICS and return main activity
+                dbOperationsHelper.resetAllStatistics();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

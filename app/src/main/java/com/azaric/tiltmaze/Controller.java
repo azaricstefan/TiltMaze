@@ -44,7 +44,7 @@ public class Controller {
         else
         {
             long delta = time-lastMesurement;
-            model.setVelocity(-x, -y, delta);
+            model.setVelocity(x, y, delta);
             lastMesurement = time;
             imageView.invalidate();
         }

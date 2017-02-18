@@ -69,14 +69,14 @@ public class NewTerrainImageView extends ImageView {
         paintOrange.setColor(Color.MAGENTA);
         paintGray.setColor(Color.BLACK);
 
-        float width=model.getWidth();
-        float height=model.getHeight();
+        float width=(float)model.getHeight();
+        float height=(float)model.getHeight();
 
-            for (Wall wall : model.getWalls()) {
-                canvas.drawRect((float) wall.getxS() * width, (float) wall.getyS() * height,
-                        (float) wall.getxE() * width, (float) wall.getyE() * height, paintGray);
+        for (Wall wall : model.getWalls()) {
+            canvas.drawRect((float) wall.getxS() * width, (float) wall.getyS() * height,
+                    (float) wall.getxE() * width, (float) wall.getyE() * height, paintGray);
 
-            }
+        }
 
         for(Point h:model.getHoles())
         {
@@ -92,11 +92,11 @@ public class NewTerrainImageView extends ImageView {
 
         if(currWall!=null)
             if(model.checkedWall(currWall))
-                canvas.drawRect((float)(Math.min(currWall.getxS(),currWall.getxE())*width),(float) Math.min(currWall.getyS(), currWall.getyE())*height,
-                    (float) Math.max(currWall.getxS(), currWall.getxE())*width,(float) Math.max(currWall.getyS(), currWall.getyE())*height, paintGray);
+                canvas.drawRect((float)(Math.min(currWall.getxS(),currWall.getxE())*width),(float)Math.min(currWall.getyS(), currWall.getyE())*height,
+                        (float)Math.max(currWall.getxS(), currWall.getxE())*width,(float) Math.max(currWall.getyS(), currWall.getyE())*height, paintGray);
             else
-                canvas.drawRect((float)(Math.min(currWall.getxS(),currWall.getxE())*width),(float) Math.min(currWall.getyS(), currWall.getyE())*height,
-                        (float) Math.max(currWall.getxS(), currWall.getxE())*width,(float) Math.max(currWall.getyS(), currWall.getyE())*height, paintRed);
+                canvas.drawRect((float)(Math.min(currWall.getxS(),currWall.getxE())*width),(float)Math.min(currWall.getyS(), currWall.getyE())*height,
+                        (float)Math.max(currWall.getxS(), currWall.getxE())*width,(float) Math.max(currWall.getyS(), currWall.getyE())*height, paintRed);
         if(hole!=null)
             if(model.checkedHole(hole))
                 canvas.drawCircle((float) hole.getX() * width, (float) hole.getY() * height, (float) model.getR() * height, paintOrange);

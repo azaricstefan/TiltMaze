@@ -179,6 +179,7 @@ public class Polygon {
         try {
             writer = new FileWriter(file);
 
+            //TODO: TAMARA: proveri to za sklaliranje
             //START POINT
             double x = startPoint.getX();
             double y = startPoint.getY();
@@ -220,6 +221,7 @@ public class Polygon {
         File file = new File(context.getFilesDir(), name);
         FileReader reader = null;
         try{
+            //TODO: TAMARA: proveri to za sklaliranje
             reader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(reader);
 

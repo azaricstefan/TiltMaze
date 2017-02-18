@@ -75,23 +75,28 @@ public class MyImageView extends ImageView{
         paintOrange.setColor(Color.MAGENTA);
         paintGray.setColor(Color.BLACK);
 
-        float width=model.getWidth();
-        float height=model.getHeight();
+        if(model != null) {
+            float width = model.getWidth();
+            float height = model.getHeight();
 
-        for (Wall wall : model.getWalls())
-            canvas.drawRect((float) wall.getxS() * width, (float) wall.getyS() * height,
-                    (float) wall.getxE() * width, (float) wall.getyE() * height, paintGray);
+            for (Wall wall : model.getWalls())
+                canvas.drawRect((float) wall.getxS() * width, (float) wall.getyS() * height,
+                        (float) wall.getxE() * width, (float) wall.getyE() * height, paintGray);
 
-        for(Point h:model.getHoles())
-        {
-            canvas.drawCircle((float) h.getX() * width, (float) h.getY() * height, (float) model.getR() * height, paintOrange);
+            for (Point h : model.getHoles()) {
+                canvas.drawCircle(
+                        (float) h.getX() * width,
+                        (float) h.getY() * height,
+                        (float) model.getR() * height,
+                        paintOrange);
+            }
+            if (model.getEndPoint() != null)
+                canvas.drawCircle((float) model.getEndPoint().getX() * width, (float) model.getEndPoint().getY() * height,
+                        (float) model.getR() * height, paintGreen);
+            if (model.getStartPoint() != null)
+                canvas.drawCircle((float) model.getStartPoint().getX() * width, (float) model.getStartPoint().getY() * height,
+                        (float) model.getrBall() * height, paintWhite);
         }
-        if(model.getEndPoint()!=null)
-            canvas.drawCircle((float)model.getEndPoint().getX()*width, (float)model.getEndPoint().getY()*height,
-                    (float)model.getR()*height,paintGreen);
-        if(model.getStartPoint()!=null)
-            canvas.drawCircle((float)model.getStartPoint().getX()*width, (float)model.getStartPoint().getY()*height,
-                    (float)model.getrBall()*height,paintWhite);
     }
 
 

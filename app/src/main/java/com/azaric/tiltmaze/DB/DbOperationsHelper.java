@@ -72,10 +72,17 @@ public class DbOperationsHelper {
 
     //DELETE
     public void resetAllStatistics(){
-        //TODO: DB code for reseting all stats
+        //TODO: TEST DB code for resetting all stats
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(DBGameModel.GameEntry.TABLE_NAME, null, null);
     }
 
     public void resetStatistic(int id){
-        //TODO: DB code for reseting single stats
+        //TODO: TEST DB code for resetting single stats
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        String whereClause = DBGameModel.GameEntry._ID + "=?" ;
+        String[] whereArgs = { "" + id };
+        db.delete(DBGameModel.GameEntry.TABLE_NAME, whereClause, whereArgs);
     }
 }

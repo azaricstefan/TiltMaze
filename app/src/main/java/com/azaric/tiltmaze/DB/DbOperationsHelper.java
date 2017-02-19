@@ -22,8 +22,8 @@ public class DbOperationsHelper {
     //SELECT
 
     /**
-     * SELECT * FROM {@link com.azaric.tiltmaze.DB.DBGameModel.GameEntry}
-     * @return
+     * Get all the info about all statistics {@link com.azaric.tiltmaze.DB.DBGameModel.GameEntry}
+     * @return {@link Cursor} cursor with the details
      */
     public Cursor getAllStatistic(){
         Cursor cursor = null;
@@ -49,6 +49,34 @@ public class DbOperationsHelper {
         return cursor;
     }
 
+    /**
+     * This is used for getting info about one polygon statistics.
+     * @param id id of the Polygon to filter
+     * @return {@link Cursor} cursor with the details
+     */
+    public Cursor getSingleStatistic(long id){
+        Cursor cursor = null;
+        try{
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            String columns[] = {DBGameModel.GameEntry._ID,
+                    DBGameModel.GameEntry.COLUMN_PLAYER_NAME,
+                    DBGameModel.GameEntry.COLUMN_POLYGON_NAME,
+                    DBGameModel.GameEntry.COLUMN_SCORE_TIME};
+            String orderBy = DBGameModel.GameEntry.COLUMN_SCORE_TIME + " DESC"; //TODO: check if order of statistic is good
+            cursor = db.query(
+                    DBGameModel.GameEntry.TABLE_NAME,
+                    columns,
+                    null,
+                    null,
+                    null,
+                    null,
+                    orderBy
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cursor;
+    }
 
     //INSERT
 
@@ -71,12 +99,20 @@ public class DbOperationsHelper {
     }
 
     //DELETE
+
+    /**
+     * Delete all rows from the database
+     */
     public void resetAllStatistics(){
         //TODO: TEST DB code for resetting all stats
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete(DBGameModel.GameEntry.TABLE_NAME, null, null);
     }
 
+    /**
+     * Delete row with the id of the chosen statistics.
+     * @param id id of the chosen statistics
+     */
     public void resetStatistic(int id){
         //TODO: TEST DB code for resetting single stats
         SQLiteDatabase db = dbHelper.getWritableDatabase();

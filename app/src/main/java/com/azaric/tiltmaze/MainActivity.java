@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.File;
 
@@ -29,13 +30,15 @@ public class MainActivity extends Activity
     ListView listView;
     ArrayAdapter<String> adapter;
 
-    String[] namesOfDrawings;
+    String[] namesOfTracks;
+    String nameOfTrack = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        listView = (ListView) findViewById(R.id.mainActivityListView);
         mainButton = (Button) findViewById(R.id.buttonMain);
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +47,7 @@ public class MainActivity extends Activity
             }
         });
 
-        addDrawingsToList();
+        addTracksToList();
     }
 
     @Override
@@ -81,37 +84,19 @@ public class MainActivity extends Activity
         super.onResume();
     }
 
+    //CODE FOR LIST VIEW
     private void updateListView(){
-        namesOfDrawings = getApplicationContext().getFilesDir().list(new java.io.FilenameFilter() {
-            /**
-             * Ovo sam napravio iz razloga sto bez ovoga mi izlistava neke sistemske fajlove iz
-             * default foldera.
-             * @param dir
-             * @param filename
-             * @return
-             */
-            @Override
-            public boolean accept(File dir, String filename) {
-                return !(filename.contains("run") || filename.contains("rList-com"));
-            }
-        });
+        //TODO: citaj iz baze!
+        //namesOfTracks = getApplicationContext().getFilesDir().list(new java.io.FilenameFilter() {
+        namesOfTracks = getApplicationContext().getExternalFilesDir(null).list();
         adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, namesOfDrawings);
+                android.R.layout.simple_list_item_1, namesOfTracks);
         listView.setAdapter(adapter);
     }
 
-    private void addDrawingsToList() {
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-        );
-
-        listView = new ListView(getApplicationContext());
+    private void addTracksToList() {
         updateListView();
-
-        listView.setLayoutParams(lp);
         listView.setOnItemClickListener(this);
-        listView.setOnItemLongClickListener(this);
     }
 
 
@@ -130,8 +115,8 @@ public class MainActivity extends Activity
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String drawingNameToOpen = (String) parent.getItemAtPosition(position);
-        startGameActivity(drawingNameToOpen);
+        String nameOfTrack = (String) parent.getItemAtPosition(position);
+        startGameActivity(nameOfTrack);
     }
 
     @Override

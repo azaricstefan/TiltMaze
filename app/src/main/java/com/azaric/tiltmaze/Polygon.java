@@ -20,7 +20,7 @@ public class Polygon {
     private Vector<Wall> walls=new Vector<>();
     private Vector<Point> holes =new Vector<>();
     private Point startPoint;
-    private  Point endPoint;
+    private Point endPoint;
     private double r=0.05;
     private double rBall=0.04;
     static double w=0.02;
@@ -174,7 +174,7 @@ public class Polygon {
     }
 
     public void savePolygon(String name, Context context) {
-        File file = new File(context.getFilesDir(), name);
+        File file = new File(context.getExternalFilesDir(null), name);
         FileWriter writer = null;
         try {
             writer = new FileWriter(file);
@@ -218,7 +218,8 @@ public class Polygon {
     }
 
     public void loadPolygonFromFile(String name, Context context) {
-        File file = new File(context.getFilesDir(), name);
+        width=height=1; //da li je ovo potrebno?
+        File file = new File(context.getExternalFilesDir(null), name);
         FileReader reader = null;
         try{
             //TODO: TAMARA: proveri to za sklaliranje
@@ -228,12 +229,14 @@ public class Polygon {
             //START POINT READ
             String startPoint = bufferedReader.readLine();
             String[] startPointArray = startPoint.split(":");
+            this.startPoint = new Point();
             this.startPoint.setX(Double.parseDouble(startPointArray[0]));
             this.startPoint.setY(Double.parseDouble(startPointArray[1]));
 
             //END POINT READ
             String endPoint = bufferedReader.readLine();
             String[] endPointArray = startPoint.split(":");
+            this.endPoint = new Point();
             this.endPoint.setX(Double.parseDouble(endPointArray[0]));
             this.endPoint.setY(Double.parseDouble(endPointArray[1]));
 

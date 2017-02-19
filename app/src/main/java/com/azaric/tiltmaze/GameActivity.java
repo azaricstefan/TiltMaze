@@ -46,8 +46,9 @@ public class GameActivity extends Activity
         Intent intent = getIntent();
         controller.nameOfDrawingToLoad = intent.getStringExtra(MainActivity.NAME_OF_DRAWING);
         if (controller.nameOfDrawingToLoad != null) {
-            controller. loadPolygon(controller.nameOfDrawingToLoad, getApplicationContext());
-        }
+            model.loadPolygonFromFile(controller.nameOfDrawingToLoad,this);
+        } else
+            controller.loadPolygon("", getApplicationContext());
 
 
 
@@ -76,9 +77,7 @@ public class GameActivity extends Activity
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
 
     @Override
@@ -93,8 +92,9 @@ public class GameActivity extends Activity
             DialogFragment backPressedDialog = new BackPressedDialog();
             backPressedDialog.show(getFragmentManager(), "BackPressedDialogTadWithoutName");
         }*/
-        //TODO nznm sta treba za backPress
-        //super.onBackPressed();
+        //TODO ako je WIN situacija pitaj za ime pokreni dialog i Toast sa (POBEDIO SI)
+        //TODO ako je lose situacija samo vrati na mainActivity i Toast sa (IZGUBIO SI)
+        super.onBackPressed();
     }
 
     public Controller getController() { return controller; }

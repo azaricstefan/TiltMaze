@@ -58,16 +58,16 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
 
         switch(action) {
             case (MotionEvent.ACTION_DOWN) :
-                imageView.setCurrWall(new Wall(event.getX() / polygon.getWidth(), event.getY() / polygon.getHeight(), event.getX() / polygon.getWidth(), event.getY() / polygon.getHeight()));
+                imageView.setCurrWall(new Wall(event.getX() / polygon.getHeight(), event.getY() / polygon.getHeight(), event.getX() / polygon.getHeight(), event.getY() / polygon.getHeight()));
                 return true;
 
             case (MotionEvent.ACTION_MOVE) :
-                imageView.getCurrWall().setxE(event.getX() / polygon.getWidth());
+                imageView.getCurrWall().setxE(event.getX() / polygon.getHeight());
                 imageView.getCurrWall().setyE(event.getY() / polygon.getHeight());
                 imageView.invalidate();
                 return true;
             case (MotionEvent.ACTION_UP) :
-                imageView.getCurrWall().setxE(event.getX() / polygon.getWidth());
+                imageView.getCurrWall().setxE(event.getX() / polygon.getHeight());
                 imageView.getCurrWall().setyE(event.getY() / polygon.getHeight());
                 if(polygon.checkedWall(imageView.getCurrWall())) {
                     Wall w = imageView.getCurrWall();
@@ -87,15 +87,15 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
 
         switch(action) {
             case (MotionEvent.ACTION_DOWN) :
-                imageView.setEndPoint(new Point(event.getX() / polygon.getWidth(), event.getY() / polygon.getHeight()));
+                imageView.setEndPoint(new Point(event.getX() / polygon.getHeight(), event.getY() / polygon.getHeight()));
                 return true;
             case (MotionEvent.ACTION_MOVE) :
-                imageView.getEndPoint().setX(event.getX() / polygon.getWidth());
+                imageView.getEndPoint().setX(event.getX() / polygon.getHeight());
                 imageView.getEndPoint().setY(event.getY() / polygon.getHeight());
                 imageView.invalidate();
                 return true;
             case (MotionEvent.ACTION_UP) :
-                imageView.getEndPoint().setX(event.getX() / polygon.getWidth());
+                imageView.getEndPoint().setX(event.getX() / polygon.getHeight());
                 imageView.getEndPoint().setY(event.getY() / polygon.getHeight());
                 if(polygon.checkedEndPoint(imageView.getEndPoint())) {
                     polygon.setEndPoint(imageView.getEndPoint());
@@ -104,6 +104,7 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
                 ((MenuItem)menu.findItem(R.id.add_end_point)).setEnabled(false);
                 ((MenuItem)menu.findItem(R.id.add_wall)).setChecked(true);
                 imageView.invalidate();
+                option=Option.WALL;
                 return true;
             default :
                 return super.onTouchEvent(event);
@@ -116,22 +117,23 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
 
         switch(action) {
             case (MotionEvent.ACTION_DOWN) :
-                imageView.setStartPoint(new Point(event.getX() / polygon.getWidth(), event.getY() / polygon.getHeight()));
+                imageView.setStartPoint(new Point(event.getX() / polygon.getHeight(), event.getY() / polygon.getHeight()));
                 return true;
             case (MotionEvent.ACTION_MOVE):
-                imageView.getStartPoint().setX(event.getX() / polygon.getWidth());
+                imageView.getStartPoint().setX(event.getX() / polygon.getHeight());
                 imageView.getStartPoint().setY(event.getY() / polygon.getHeight());
                 imageView.invalidate();
                 return true;
             case (MotionEvent.ACTION_UP) :
-                imageView.getStartPoint().setX(event.getX() / polygon.getWidth());
+                imageView.getStartPoint().setX(event.getX() / polygon.getHeight());
                 imageView.getStartPoint().setY(event.getY() / polygon.getHeight());
-                if(polygon.checkedStartPoint(imageView.getEndPoint())) {
+                if(polygon.checkedStartPoint(imageView.getStartPoint())) {
                     polygon.setStartPoint(imageView.getStartPoint());
                 }
                 imageView.setStartPoint(null);
                 ((MenuItem)menu.findItem(R.id.add_start_point)).setEnabled(false);
                 ((MenuItem)menu.findItem(R.id.add_wall)).setChecked(true);
+                option=Option.WALL;
                 imageView.invalidate();
                 return true;
             default :
@@ -145,15 +147,15 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
 
         switch(action) {
             case (MotionEvent.ACTION_DOWN):
-                imageView.setHole(new Point(event.getX() / polygon.getWidth(), event.getY() / polygon.getHeight()));
+                imageView.setHole(new Point(event.getX() / polygon.getHeight(), event.getY() / polygon.getHeight()));
                 return true;
             case (MotionEvent.ACTION_MOVE) :
-                imageView.getHole().setX(event.getX() / polygon.getWidth());
+                imageView.getHole().setX(event.getX() / polygon.getHeight());
                 imageView.getHole().setY(event.getY() / polygon.getHeight());
                 imageView.invalidate();
                 return true;
             case (MotionEvent.ACTION_UP):
-                imageView.getHole().setX(event.getX() / polygon.getWidth());
+                imageView.getHole().setX(event.getX() / polygon.getHeight());
                 imageView.getHole().setY(event.getY() / polygon.getHeight());
                 if(polygon.checkedHole(imageView.getHole())) {
                     polygon.addHole(imageView.getHole());
@@ -203,7 +205,7 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
     }
 
     public boolean save(){
-        polygon.savePolygon("aaa", this);
-        return true; //TODO
+        polygon.savePolygon("TEST123456", this);
+        return true;
     }
 }

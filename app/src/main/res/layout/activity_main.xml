@@ -25,6 +25,7 @@
         android:text="Game Activity start" />
 
     <ListView
+        android:id="@+id/mainActivityListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

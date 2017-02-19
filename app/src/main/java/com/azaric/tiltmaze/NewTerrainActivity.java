@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.azaric.tiltmaze.Dialog.CreateTerrainDialog;
 import com.azaric.tiltmaze.Dialog.SaveDialog;
 
 import java.util.Queue;
@@ -19,6 +20,7 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
     Polygon polygon;
 
     private NewTerrainImageView imageView;
+
     private enum Option {HOLE, START_POINT, END_POINT, WALL, MOVE, DELETE};
     private Option option=Option.WALL;
     private Menu menu;
@@ -249,5 +251,15 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
         DialogFragment saveDialog = new SaveDialog();
         saveDialog.show(getFragmentManager(), "saveDialog");
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        DialogFragment createTerrainDialog = new CreateTerrainDialog();
+        createTerrainDialog.show(getFragmentManager(), "createTerrainDialog");
+    }
+
+    public boolean isSavePossible() {
+        return menu.findItem(R.id.save).isEnabled();
     }
 }

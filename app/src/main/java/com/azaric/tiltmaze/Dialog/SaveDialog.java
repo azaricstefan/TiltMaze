@@ -50,7 +50,7 @@ public class SaveDialog extends DialogFragment {
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
-                        getActivity().finish();
+                        //getActivity().finish();
                     }
                 });
         // Create the AlertDialog object and return it

@@ -42,7 +42,7 @@ public class MainDialogItemLongClick extends DialogFragment {
                 .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
-                        getActivity().finish();
+                        //getActivity().finish();
                     }
                 });
         // Create the AlertDialog object and return it

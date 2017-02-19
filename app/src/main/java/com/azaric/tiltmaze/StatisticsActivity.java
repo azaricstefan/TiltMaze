@@ -34,6 +34,7 @@ public class StatisticsActivity extends Activity
     public static final String STATISTICS_SINGLE_TRACK = "com.azaric.tiltmaze.StatisticsActivity.STATISTICS_SINGLE_TRACK";
 
     TextView titleTextView;
+    Menu menu;
 
     DbOperationsHelper dbOperationsHelper;
 
@@ -47,7 +48,6 @@ public class StatisticsActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-
 
         //GET GUI ELEMENTS
         titleTextView = (TextView) findViewById(R.id.statisticsTitleTextView);
@@ -72,6 +72,7 @@ public class StatisticsActivity extends Activity
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.statistics_menu, menu);
+        this.menu = menu;
         return true;
     }
 
@@ -125,6 +126,7 @@ public class StatisticsActivity extends Activity
 
         myCursorAdapter = new SingleStatsCursorAdapter(this,dbOperationsHelper.getSingleStatistic(nameOfTrack));
         listView.setAdapter(myCursorAdapter);
+        menu.findItem(R.id.delete_statistic_for_selected_polygon).setVisible(true);
         //OPEN STATS FOR POLYGON AND SHOW THEM
         //TODO: TEST update StatisticsActivity with details about the polygon
 

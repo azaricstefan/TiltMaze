@@ -3,9 +3,10 @@
 
     <item
         android:title="@string/delete_stats_for_selected_polygon"
-        android:id="@+id/delete_statistic_for_selected_polygon" />
+        android:id="@+id/delete_statistic_for_selected_polygon"
+        android:visible="false" />
     <item
         android:title="@string/delete_all_statistics"
-        android:id="@+id/delete_all_statistics"/>
+        android:id="@+id/delete_all_statistics" />
 
 </menu>

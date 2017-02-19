@@ -89,7 +89,7 @@ public class GameActivity extends Activity
         }
         else
         {
-            DialogFragment backPressedDialog = new BackPressedDialog();
+            DialogFragment backPressedDialog = new SaveDialog();
             backPressedDialog.show(getFragmentManager(), "BackPressedDialogTadWithoutName");
         }*/
         //TODO ako je WIN situacija pitaj za ime pokreni dialog i Toast sa (POBEDIO SI)

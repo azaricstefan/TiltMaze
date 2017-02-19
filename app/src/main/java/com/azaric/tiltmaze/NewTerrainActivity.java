@@ -1,22 +1,20 @@
 package com.azaric.tiltmaze;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
+import android.app.DialogFragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.azaric.tiltmaze.Dialog.SaveDialog;
+
 public class NewTerrainActivity extends Activity implements View.OnTouchListener {
     Polygon polygon;
 
-    private  NewTerrainImageView imageView;
+    private NewTerrainImageView imageView;
     private enum Option {HOLE, START_POINT, END_POINT, WALL, MOVE, DELETE};
     private Option option=Option.WALL;
     private Menu menu;
@@ -204,8 +202,12 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
         }
     }
 
+    public Polygon getPolygon(){ return polygon; }
+
     public boolean save(){
-        polygon.savePolygon("TEST123456", this);
+        //prikazi dialog
+        DialogFragment saveDialog = new SaveDialog();
+        saveDialog.show(getFragmentManager(), "saveDialog");
         return true;
     }
 }

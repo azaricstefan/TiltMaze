@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 
 import com.azaric.tiltmaze.GameActivity;
 import com.azaric.tiltmaze.MainActivity;
+import com.azaric.tiltmaze.NewTerrainActivity;
+import com.azaric.tiltmaze.StatisticsActivity;
 
 
 /**
@@ -18,7 +20,7 @@ import com.azaric.tiltmaze.MainActivity;
  * Created in project with name: "Tiltmaze"
  */
 
-public class BackPressedDialog extends DialogFragment {
+public class SaveDialog extends DialogFragment {
 
     EditText input;
 
@@ -39,11 +41,10 @@ public class BackPressedDialog extends DialogFragment {
                 .setView(input)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        ((GameActivity)getActivity())
-                                .getController().getModel()
+                        ((NewTerrainActivity)getActivity())
+                                .getPolygon()
                                 .savePolygon(input.getText().toString(), getActivity());
                         getActivity().finish();
-                        //TODO: update ListView sa novim crtezom!
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

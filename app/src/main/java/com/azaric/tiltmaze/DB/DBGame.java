@@ -15,5 +15,4 @@ public class DBGame implements BaseColumns {
         public static final String COLUMN_POLYGON_NAME = "polygon_name";
         public static final String COLUMN_SCORE_TIME = "time";
     }
-
 }

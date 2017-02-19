@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -26,8 +27,8 @@ public class MainActivity extends Activity
     public static final String NAME_OF_POLYGON = "com.azaric.tiltmaze.MainActivity.NAME_OF_DRAWING";
 
     //GUI
-    Button mainButton;
     ListView listView;
+    TextView textView;
     ArrayAdapter<String> adapter;
 
     String[] namesOfTracks;
@@ -38,16 +39,8 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        textView = (TextView) findViewById(R.id.textViewMainStatus);
         listView = (ListView) findViewById(R.id.mainActivityListView);
-        mainButton = (Button) findViewById(R.id.buttonMain);
-        mainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                startActivity(intent);
-            }
-        });
-
         addTracksToList();
     }
 
@@ -92,6 +85,9 @@ public class MainActivity extends Activity
         adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, namesOfTracks);
         listView.setAdapter(adapter);
+        if(namesOfTracks.length == 0){
+            textView.setText("Nema poligona raspolozivih");
+        } else textView.setText("");
     }
 
     private void addTracksToList() {

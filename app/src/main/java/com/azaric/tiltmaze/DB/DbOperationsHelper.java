@@ -121,4 +121,25 @@ public class DbOperationsHelper {
         String[] whereArgs = { "" + id };
         db.delete(DBGameModel.GameEntry.TABLE_NAME, whereClause, whereArgs);
     }
+
+    /**
+     * Get all statistics in String[]
+     * @return @{@link String} array with polygonName and id
+     */
+    public String[] getAllStatisticStrings() {
+        String[] ret = null;
+        Cursor c = getAllStatistic();
+
+        if(c != null) {
+            int numOfRows = c.getCount(), i = 0;
+            ret = new String[numOfRows];
+
+            while (c.moveToNext()) {
+                String polygonName = c.getString(c.getColumnIndex(DBGameModel.GameEntry.COLUMN_POLYGON_NAME));
+                long id = c.getLong(c.getColumnIndex(DBGameModel.GameEntry._ID));
+                ret[i++] = polygonName + ":" + id;
+            }
+        }
+        return ret;
+    }
 }

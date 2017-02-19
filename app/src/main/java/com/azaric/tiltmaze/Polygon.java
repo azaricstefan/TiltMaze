@@ -491,6 +491,9 @@ public class Polygon {
     }
 
     public boolean isGameOver() {
-        return finish && win;
+        return finish;
+    }
+    public boolean isWin(){
+        return win;
     }
 }

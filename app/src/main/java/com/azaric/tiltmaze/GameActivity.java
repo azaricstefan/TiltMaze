@@ -8,6 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.azaric.tiltmaze.DB.DbOperationsHelper;
 import com.azaric.tiltmaze.Dialog.NameDialog;
@@ -89,14 +90,24 @@ public class GameActivity extends Activity
         long time = event.timestamp;
 
         controller.addNewAccelerometerValues(x, y, time);
-        boolean win = model.isGameOver(); //TODO: returns true
-        if(win && firstTime){
-            firstTime = false;
-            endTime = System.currentTimeMillis();
-            score = getGameTime();
-            //otvori dialog
-            DialogFragment nameDialog = new NameDialog();
-            nameDialog.show(getFragmentManager(), "nameDialog");
+        boolean gameOver = model.isGameOver(); //TODO: returns true
+        if(gameOver && firstTime){
+            if(model.isWin()) {
+                firstTime = false;
+                endTime = System.currentTimeMillis();
+                score = getGameTime();
+                Toast t;
+                t = Toast.makeText(this,"Pobedili ste",Toast.LENGTH_LONG);
+                t.show();
+                //otvori dialog
+                DialogFragment nameDialog = new NameDialog();
+                nameDialog.show(getFragmentManager(), "nameDialog");
+            } else {
+                Toast t;
+                t = Toast.makeText(this,"Izgubili ste",Toast.LENGTH_LONG);
+                t.show();
+                finish();
+            }
         }
 
     }

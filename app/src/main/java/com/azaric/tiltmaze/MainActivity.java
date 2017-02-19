@@ -1,7 +1,9 @@
 package com.azaric.tiltmaze;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
@@ -16,6 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.azaric.tiltmaze.DB.DbOperationsHelper;
+import com.azaric.tiltmaze.Dialog.MainDialogItemLongClick;
+import com.azaric.tiltmaze.Dialog.SaveDialog;
 
 import java.io.File;
 
@@ -80,7 +86,7 @@ public class MainActivity extends Activity
     }
 
     //CODE FOR LIST VIEW
-    private void updateListView(){
+    public void updateListView(){
         //citaj sve fajlove iz files direktorijuma
         namesOfTracks = getApplicationContext().getExternalFilesDir(null).list();
         adapter = new ArrayAdapter<String>(this,
@@ -94,6 +100,7 @@ public class MainActivity extends Activity
     private void addTracksToList() {
         updateListView();
         listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(this);
     }
 
 
@@ -118,7 +125,21 @@ public class MainActivity extends Activity
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //TODO: obradi meni za long klik
-        return false;
+        nameOfTrack = (String) adapterView.getItemAtPosition(i);
+        DialogFragment mainDialogItemLongClick = new MainDialogItemLongClick();
+        mainDialogItemLongClick.show(getFragmentManager(), "mainDialogItemLongClick");
+        return true;
+    }
+
+    public String getPolygonName() {
+        return nameOfTrack;
+    }
+
+    public void deletePolygon(String polygonName) {
+        File[] files = getApplicationContext().getExternalFilesDir(null).listFiles();
+        for(int i = 0; i < files.length; i++){
+            if(files[i].getName().equals(polygonName))
+                files[i].delete();
+        }
     }
 }

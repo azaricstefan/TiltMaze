@@ -319,8 +319,8 @@ public class Polygon {
 
     double velocityX = 0, velocityY = 0;
 
-    private  double traction=0.2;
-    private  double collision=0.7;
+    private  double traction=0.2;//TODO SETTINGS
+    private  double collision=0.7; //TODO SETTINGS
     private double accTimeFactor = 1000000;
     private double g=9.81;
     public void setVelocity(float y, float x, long delta) {

@@ -26,7 +26,7 @@ public class CreateTerrainDialog extends DialogFragment {
         myActivity = (NewTerrainActivity) getActivity();
 
         builder.setMessage("Da li zelite da sačuvate trenutni poligon?")
-                .setTitle("Brisanje jedne statistike")
+                .setTitle("Čuvanje trenutnog poligona")
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();

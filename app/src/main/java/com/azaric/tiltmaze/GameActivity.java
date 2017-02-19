@@ -1,7 +1,6 @@
 package com.azaric.tiltmaze;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;

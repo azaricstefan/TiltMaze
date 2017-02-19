@@ -8,6 +8,6 @@
         <item android:title="Move" android:id="@+id/move" />
         <item android:title="Delete" android:id="@+id/delete"/>
     </group>
-    <item android:title="Undo" android:id="@+id/undo"/>
-    <item android:title="Save" android:id="@+id/save"/>
+    <item android:title="Undo" android:id="@+id/undo" android:enabled="false"/>
+    <item android:title="Save" android:id="@+id/save" android:enabled="false"/>
 </menu>

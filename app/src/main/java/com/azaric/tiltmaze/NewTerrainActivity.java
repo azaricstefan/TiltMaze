@@ -75,10 +75,10 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
                 if(polygon.checkedWall(imageView.getCurrWall())) {
                     Wall w = imageView.getCurrWall();
                     polygon.addWall(new Wall(Math.min(w.getxS(), w.getxE()), Math.min(w.getyS(), w.getyE()), Math.max(w.getxS(), w.getxE()), Math.max(w.getyS(), w.getyE())));
+                    typeS.push('w');
+                    menu.findItem(R.id.undo).setEnabled(true);
                 }
                 imageView.setCurrWall(null);
-                typeS.push('w');
-                menu.findItem(R.id.undo).setEnabled(true);
                 imageView.invalidate();
 
                 return true;
@@ -105,14 +105,16 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
                 imageView.getEndPoint().setY(event.getY() / polygon.getHeight());
                 if(polygon.checkedEndPoint(imageView.getEndPoint())) {
                     polygon.setEndPoint(imageView.getEndPoint());
+                    ((MenuItem)menu.findItem(R.id.add_end_point)).setEnabled(false);
+                    ((MenuItem)menu.findItem(R.id.add_wall)).setChecked(true);
+                    option=Option.WALL;
+                    typeS.push('e');
+                    menu.findItem(R.id.undo).setEnabled(true);
+                    if(!menu.findItem(R.id.add_start_point).isEnabled())
+                        menu.findItem(R.id.save).setEnabled(true);
                 }
                 imageView.setEndPoint(null);
-                ((MenuItem)menu.findItem(R.id.add_end_point)).setEnabled(false);
-                ((MenuItem)menu.findItem(R.id.add_wall)).setChecked(true);
                 imageView.invalidate();
-                option=Option.WALL;
-                typeS.push('e');
-                menu.findItem(R.id.undo).setEnabled(true);
                 return true;
             default :
                 return super.onTouchEvent(event);
@@ -137,14 +139,17 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
                 imageView.getStartPoint().setY(event.getY() / polygon.getHeight());
                 if(polygon.checkedStartPoint(imageView.getStartPoint())) {
                     polygon.setStartPoint(imageView.getStartPoint());
+                    ((MenuItem)menu.findItem(R.id.add_start_point)).setEnabled(false);
+                    ((MenuItem)menu.findItem(R.id.add_wall)).setChecked(true);
+                    option=Option.WALL;
+                    imageView.invalidate();
+                    typeS.push('s');
+                    menu.findItem(R.id.undo).setEnabled(true);
+                    if(!menu.findItem(R.id.add_end_point).isEnabled())
+                        menu.findItem(R.id.save).setEnabled(true);
                 }
                 imageView.setStartPoint(null);
-                ((MenuItem)menu.findItem(R.id.add_start_point)).setEnabled(false);
-                ((MenuItem)menu.findItem(R.id.add_wall)).setChecked(true);
-                option=Option.WALL;
                 imageView.invalidate();
-                typeS.push('s');
-                menu.findItem(R.id.undo).setEnabled(true);
                 return true;
             default :
                 return super.onTouchEvent(event);
@@ -169,11 +174,12 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
                 imageView.getHole().setY(event.getY() / polygon.getHeight());
                 if(polygon.checkedHole(imageView.getHole())) {
                     polygon.addHole(imageView.getHole());
+                    typeS.push('h');
+                    menu.findItem(R.id.undo).setEnabled(true);
                 }
                 imageView.setHole(null);
                 imageView.invalidate();
-                typeS.push('h');
-                menu.findItem(R.id.undo).setEnabled(true);
+
                 return true;
             default :
                 return super.onTouchEvent(event);
@@ -224,10 +230,14 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
         polygon.removeLast(c);
         if(typeS.isEmpty())
             menu.findItem(R.id.undo).setEnabled(false);
-        if(c=='s')
+        if(c=='s') {
             menu.findItem(R.id.add_start_point).setEnabled(true);
-        if(c=='e')
+            menu.findItem(R.id.save).setEnabled(false);
+        }
+        if(c=='e'){
             menu.findItem(R.id.add_end_point).setEnabled(true);
+            menu.findItem(R.id.save).setEnabled(false);
+        }
         imageView.invalidate();
     }
 

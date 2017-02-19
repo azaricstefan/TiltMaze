@@ -74,6 +74,7 @@ public class GameActivity extends Activity
         long time = event.timestamp;
 
         controller.addNewAccelerometerValues(x, y, time);
+
     }
 
     @Override

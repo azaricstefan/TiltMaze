@@ -370,9 +370,10 @@ public class Polygon {
             //dialog
             return;
         }
+        Log.d("loptica","noviKrug");
         for(Wall w:walls)
         {
-            if(w.getxS()-rBall>lastPoint.getX() && w.getxS()-rBall<startPoint.getX())
+            if(w.getxS()-rBall+0.001>lastPoint.getX() && w.getxS()-rBall-0.001<startPoint.getX())
             {
                 double yy=lastPoint.getY()+(startPoint.getY()-lastPoint.getY())*(w.getxS()-rBall-lastPoint.getX())/(startPoint.getX()-lastPoint.getX());
                 if(yy>w.getyS()-rBall && yy<w.getyE()+rBall)
@@ -382,33 +383,36 @@ public class Polygon {
                         startPoint.setX(w.getxS()-rBall-0.001);
                     velocityX=-velocityX*collision;
                     velocityY*=collision;
+                    Log.d("loptica","xS");
                 }
             }
-            if(w.getxE()+rBall<lastPoint.getX() && w.getxE()+rBall>startPoint.getX())
+            if(w.getxE()+rBall-0.001<lastPoint.getX() && w.getxE()+rBall+0.001>startPoint.getX())
             {
                 double yy=lastPoint.getY()+(startPoint.getY()-lastPoint.getY())*(w.getxE()+rBall-lastPoint.getX())/(startPoint.getX()-lastPoint.getX());
                 if(yy>w.getyS()-rBall && yy<w.getyE()+rBall)
                 {
-                    startPoint.setX(startPoint.getX()-2*(startPoint.getX()-w.getxE()-rBall));
+                    startPoint.setX(startPoint.getX() - 2 * (startPoint.getX() - w.getxE() - rBall));
                     velocityX=-velocityX*collision;
                     if(startPoint.getX()<w.getxE()+rBall+0.001)
                         startPoint.setX(w.getxE()+rBall+0.001);
                     velocityY*=collision;
+                    Log.d("loptica","xE");
                 }
             }
-            if(w.getyS()-rBall>lastPoint.getY() && w.getyS()-rBall<startPoint.getY())
+            if(w.getyS()-rBall+0.001>lastPoint.getY() && w.getyS()-rBall-0.001<startPoint.getY())
             {
                 double xx=lastPoint.getX()+(startPoint.getX()-lastPoint.getX())*(w.getyS()-rBall-lastPoint.getY())/(startPoint.getY()-lastPoint.getY());
                 if(xx>w.getxS()-rBall && xx<w.getxE()+rBall)
                 {
                     startPoint.setY(startPoint.getY() - 2 * (startPoint.getY() - w.getyS() + rBall));
                     if(startPoint.getY()>w.getyS()-rBall-0.001)
-                        startPoint.setY(w.getyE()-rBall-0.001);
+                        startPoint.setY(w.getyS()-rBall-0.001);
                     velocityY=-velocityY*collision;
                     velocityX*=collision;
+                    Log.d("loptica","yS");
                 }
             }
-            if(w.getyE()+rBall<lastPoint.getY() && w.getyE()+rBall>startPoint.getY())
+            if(w.getyE()+rBall-0.001<lastPoint.getY() && w.getyE()+rBall+0.001>startPoint.getY())
             {
                 double xx=lastPoint.getX()+(startPoint.getX()-lastPoint.getX())*(w.getyS()+rBall-lastPoint.getY())/(startPoint.getY()-lastPoint.getY());
                 if (xx > w.getxS()-rBall && xx < w.getxE()+rBall) {
@@ -417,54 +421,16 @@ public class Polygon {
                         startPoint.setY(w.getyE()+rBall+0.001);
                     velocityY=-velocityY*collision;
                     velocityX*=collision;
+                    Log.d("loptica","yE");
                 }
             }
-            /*Point P=new Point(w.getxE(),w.getyE());
-            Point PP=pointToLineDistance(lastPoint,startPoint,P);
-            if(dist(PP,P) <rBall)
-            {
-                startPoint.setY(w.getyE() + (lastPoint.getX() - w.getxE()) * width / height);
-                startPoint.setX(w.getxE()+(lastPoint.getY()-w.getyE())*height/width);
-                velocityY=-velocityX*collision;
-                velocityX=-velocityY*collision;
-            } else
-            {
-                P=new Point(w.getxS(),w.getyE());
-                PP=pointToLineDistance(lastPoint,startPoint,P);
-                if(dist(PP,P) <rBall)
-                {
-                    startPoint.setY(w.getyE() + (lastPoint.getX() - w.getxS()) * width / height);
-                    startPoint.setX(w.getxS() + (lastPoint.getY() - w.getyE()) * height / width);
-                    velocityY=-velocityX*collision;
-                    velocityX=-velocityY*collision;
-                }
-                else {
-                    P = new Point(w.getxE(), w.getyS());
-                    PP = pointToLineDistance(lastPoint, startPoint, P);
-                    if (dist(PP, P) < rBall) {
-                        startPoint.setY(w.getyS() + (lastPoint.getX() - w.getxE()) * width / height);
-                        startPoint.setX(w.getxE() + (lastPoint.getY() - w.getyS()) * height / width);
-                        velocityY = -velocityX * collision;
-                        velocityX = -velocityY * collision;
-                    } else {
-                        P = new Point(w.getxS(), w.getyS());
-                        PP = pointToLineDistance(lastPoint, startPoint, P);
-                        if (dist(PP, P) < rBall) {
-                            startPoint.setY(w.getyS() + (lastPoint.getX() - w.getxS()) * width / height);
-                            startPoint.setX(w.getxS() + (lastPoint.getY() - w.getyS()) * height / width);
-                            velocityY = -velocityX * collision;
-                            velocityX = -velocityY * collision;
-                        }
-                    }
-                }
-            }
-
-*/
-            for(Wall wall:walls)
-                if(checkedIntersection(wall,startPoint,rBall-0.01))
-                    startPoint=lastPoint;
-
         }
+        for(Wall wall:walls)
+            if(checkedIntersection(wall,startPoint,rBall))
+            {
+                startPoint=lastPoint;
+                Log.d("loptica","reset");
+            }
     }
 
     public double dist(Point A, Point B) {

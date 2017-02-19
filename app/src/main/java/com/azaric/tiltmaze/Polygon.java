@@ -320,7 +320,7 @@ public class Polygon {
     double velocityX = 0, velocityY = 0;
 
     private  double traction=0.2;
-    private  double collision=1.7;
+    private  double collision=0.7;
     private double accTimeFactor = 1000000;
     private double g=9.81;
     public void setVelocity(float y, float x, long delta) {
@@ -340,7 +340,7 @@ public class Polygon {
         {
             Point nh=pointToLineDistance(lastPoint,startPoint,h);
             double cr=dist(nh,h);
-            if(cr<r)
+            if(cr<r*0.9)
             {
 
                 if(cr+rBall>r) {
@@ -375,9 +375,11 @@ public class Polygon {
             if(w.getxS()-rBall>lastPoint.getX() && w.getxS()-rBall<startPoint.getX())
             {
                 double yy=lastPoint.getY()+(startPoint.getY()-lastPoint.getY())*(w.getxS()-rBall-lastPoint.getX())/(startPoint.getX()-lastPoint.getX());
-                if(yy>w.getyS() && yy<w.getyE())
+                if(yy>w.getyS()-rBall && yy<w.getyE()+rBall)
                 {
                     startPoint.setX(startPoint.getX()-2*(startPoint.getX()-w.getxS()+rBall));
+                    if(startPoint.getX()<w.getxS()-rBall-0.001)
+                        startPoint.setX(w.getxS()-rBall-0.001);
                     velocityX=-velocityX*collision;
                     velocityY*=collision;
                 }
@@ -385,19 +387,23 @@ public class Polygon {
             if(w.getxE()+rBall<lastPoint.getX() && w.getxE()+rBall>startPoint.getX())
             {
                 double yy=lastPoint.getY()+(startPoint.getY()-lastPoint.getY())*(w.getxE()+rBall-lastPoint.getX())/(startPoint.getX()-lastPoint.getX());
-                if(yy>w.getyS() && yy<w.getyE())
+                if(yy>w.getyS()-rBall && yy<w.getyE()+rBall)
                 {
                     startPoint.setX(startPoint.getX()-2*(startPoint.getX()-w.getxE()-rBall));
                     velocityX=-velocityX*collision;
+                    if(startPoint.getX()<w.getxE()+rBall+0.001)
+                        startPoint.setX(w.getxE()+rBall+0.001);
                     velocityY*=collision;
                 }
             }
             if(w.getyS()-rBall>lastPoint.getY() && w.getyS()-rBall<startPoint.getY())
             {
                 double xx=lastPoint.getX()+(startPoint.getX()-lastPoint.getX())*(w.getyS()-rBall-lastPoint.getY())/(startPoint.getY()-lastPoint.getY());
-                if(xx>w.getxS() && xx<w.getxE())
+                if(xx>w.getxS()-rBall && xx<w.getxE()+rBall)
                 {
                     startPoint.setY(startPoint.getY() - 2 * (startPoint.getY() - w.getyS() + rBall));
+                    if(startPoint.getY()>w.getyS()-rBall-0.001)
+                        startPoint.setY(w.getyE()-rBall-0.001);
                     velocityY=-velocityY*collision;
                     velocityX*=collision;
                 }
@@ -405,12 +411,59 @@ public class Polygon {
             if(w.getyE()+rBall<lastPoint.getY() && w.getyE()+rBall>startPoint.getY())
             {
                 double xx=lastPoint.getX()+(startPoint.getX()-lastPoint.getX())*(w.getyS()+rBall-lastPoint.getY())/(startPoint.getY()-lastPoint.getY());
-                if (xx > w.getxS() && xx < w.getxE()) {
+                if (xx > w.getxS()-rBall && xx < w.getxE()+rBall) {
                     startPoint.setY(startPoint.getY()-2*(startPoint.getY()-w.getyE()-rBall));
+                    if(startPoint.getY()<w.getyE()+rBall+0.001)
+                        startPoint.setY(w.getyE()+rBall+0.001);
                     velocityY=-velocityY*collision;
                     velocityX*=collision;
                 }
             }
+            /*Point P=new Point(w.getxE(),w.getyE());
+            Point PP=pointToLineDistance(lastPoint,startPoint,P);
+            if(dist(PP,P) <rBall)
+            {
+                startPoint.setY(w.getyE() + (lastPoint.getX() - w.getxE()) * width / height);
+                startPoint.setX(w.getxE()+(lastPoint.getY()-w.getyE())*height/width);
+                velocityY=-velocityX*collision;
+                velocityX=-velocityY*collision;
+            } else
+            {
+                P=new Point(w.getxS(),w.getyE());
+                PP=pointToLineDistance(lastPoint,startPoint,P);
+                if(dist(PP,P) <rBall)
+                {
+                    startPoint.setY(w.getyE() + (lastPoint.getX() - w.getxS()) * width / height);
+                    startPoint.setX(w.getxS() + (lastPoint.getY() - w.getyE()) * height / width);
+                    velocityY=-velocityX*collision;
+                    velocityX=-velocityY*collision;
+                }
+                else {
+                    P = new Point(w.getxE(), w.getyS());
+                    PP = pointToLineDistance(lastPoint, startPoint, P);
+                    if (dist(PP, P) < rBall) {
+                        startPoint.setY(w.getyS() + (lastPoint.getX() - w.getxE()) * width / height);
+                        startPoint.setX(w.getxE() + (lastPoint.getY() - w.getyS()) * height / width);
+                        velocityY = -velocityX * collision;
+                        velocityX = -velocityY * collision;
+                    } else {
+                        P = new Point(w.getxS(), w.getyS());
+                        PP = pointToLineDistance(lastPoint, startPoint, P);
+                        if (dist(PP, P) < rBall) {
+                            startPoint.setY(w.getyS() + (lastPoint.getX() - w.getxS()) * width / height);
+                            startPoint.setX(w.getxS() + (lastPoint.getY() - w.getyS()) * height / width);
+                            velocityY = -velocityX * collision;
+                            velocityX = -velocityY * collision;
+                        }
+                    }
+                }
+            }
+
+*/
+            for(Wall wall:walls)
+                if(checkedIntersection(wall,startPoint,rBall-0.01))
+                    startPoint=lastPoint;
+
         }
     }
 

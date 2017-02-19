@@ -23,7 +23,7 @@ public class MainActivity extends Activity
         AdapterView.OnItemClickListener,
         AdapterView.OnItemLongClickListener{
 
-    public static final String NAME_OF_DRAWING = "com.azaric.tiltmaze.MainActivity.NAME_OF_DRAWING";
+    public static final String NAME_OF_POLYGON = "com.azaric.tiltmaze.MainActivity.NAME_OF_DRAWING";
 
     //GUI
     Button mainButton;
@@ -87,8 +87,7 @@ public class MainActivity extends Activity
 
     //CODE FOR LIST VIEW
     private void updateListView(){
-        //TODO: citaj iz baze!
-        //namesOfTracks = getApplicationContext().getFilesDir().list(new java.io.FilenameFilter() {
+        //citaj sve fajlove iz files direktorijuma
         namesOfTracks = getApplicationContext().getExternalFilesDir(null).list();
         adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, namesOfTracks);
@@ -103,7 +102,7 @@ public class MainActivity extends Activity
 
     private void startGameActivity(String drawingNameToOpen){
         Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra(NAME_OF_DRAWING, drawingNameToOpen);
+        intent.putExtra(NAME_OF_POLYGON, drawingNameToOpen);
         startActivity(intent);
     }
 

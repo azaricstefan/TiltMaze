@@ -125,8 +125,8 @@ public class StatisticsActivity extends Activity
         myCursorAdapter = new SingleStatsCursorAdapter(this,dbOperationsHelper.getSingleStatistic(nameOfTrack));
         listView.setAdapter(myCursorAdapter);
         //OPEN STATS FOR POLYGON AND SHOW THEM
+        //TODO: TEST update StatisticsActivity with details about the polygon
 
-        //TODO: update StatisticsActivity with details about the polygon
 
     }
 

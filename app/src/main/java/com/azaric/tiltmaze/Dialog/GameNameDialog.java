@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import com.azaric.tiltmaze.GameActivity;
 import com.azaric.tiltmaze.MainActivity;
 import com.azaric.tiltmaze.NewTerrainActivity;
+import com.azaric.tiltmaze.StatisticsActivity;
 
 /**
  * Created by Stefan on 1/16/17 | 00:00.
@@ -49,6 +51,7 @@ public class GameNameDialog extends DialogFragment {
                                         myActivity.getController().getNameOfPolygonToLoad(),
                                         myActivity.getScore());
                         getActivity().finish();
+                        startStatisticsActivity();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -59,5 +62,12 @@ public class GameNameDialog extends DialogFragment {
                 });
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    public void startStatisticsActivity(){
+        String polygonName = myActivity.getController().getNameOfPolygonToLoad();
+        Intent intent = new Intent(myActivity, StatisticsActivity.class);
+        intent.putExtra(StatisticsActivity.STATISTICS_SINGLE_TRACK,polygonName);
+        startActivity(intent);
     }
 }

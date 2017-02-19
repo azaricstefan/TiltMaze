@@ -89,7 +89,7 @@ public class GameActivity extends Activity
         long time = event.timestamp;
 
         controller.addNewAccelerometerValues(x, y, time);
-        boolean gameOver = model.isGameOver(); //TODO: returns true
+        boolean gameOver = model.isGameOver();
         if(gameOver && firstTime){
             if(model.isWin()) {
                 firstTime = false;

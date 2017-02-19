@@ -469,4 +469,23 @@ public class Polygon {
         startPoint.setX(startPoint.getX()*scaleW);
     }
 
+    void removeLast(char c)
+    {
+        switch (c)
+        {
+            case 'w':
+                walls.remove(walls.size()-1);
+                break;
+            case 'e':
+                endPoint=null;
+                break;
+            case 's':
+                startPoint=null;
+                break;
+            case 'h':
+                holes.remove(holes.size()-1);
+                break;
+        }
+    }
+
 }

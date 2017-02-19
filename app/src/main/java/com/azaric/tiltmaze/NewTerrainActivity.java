@@ -11,6 +11,10 @@ import android.view.View;
 
 import com.azaric.tiltmaze.Dialog.SaveDialog;
 
+import java.util.Queue;
+import java.util.Stack;
+import java.util.Vector;
+
 public class NewTerrainActivity extends Activity implements View.OnTouchListener {
     Polygon polygon;
 
@@ -18,6 +22,7 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
     private enum Option {HOLE, START_POINT, END_POINT, WALL, MOVE, DELETE};
     private Option option=Option.WALL;
     private Menu menu;
+    private Stack<Character> typeS=new Stack<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +77,10 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
                     polygon.addWall(new Wall(Math.min(w.getxS(), w.getxE()), Math.min(w.getyS(), w.getyE()), Math.max(w.getxS(), w.getxE()), Math.max(w.getyS(), w.getyE())));
                 }
                 imageView.setCurrWall(null);
+                typeS.push('w');
+                menu.findItem(R.id.undo).setEnabled(true);
                 imageView.invalidate();
+
                 return true;
             default :
                 return super.onTouchEvent(event);
@@ -103,6 +111,8 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
                 ((MenuItem)menu.findItem(R.id.add_wall)).setChecked(true);
                 imageView.invalidate();
                 option=Option.WALL;
+                typeS.push('e');
+                menu.findItem(R.id.undo).setEnabled(true);
                 return true;
             default :
                 return super.onTouchEvent(event);
@@ -133,6 +143,8 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
                 ((MenuItem)menu.findItem(R.id.add_wall)).setChecked(true);
                 option=Option.WALL;
                 imageView.invalidate();
+                typeS.push('s');
+                menu.findItem(R.id.undo).setEnabled(true);
                 return true;
             default :
                 return super.onTouchEvent(event);
@@ -160,6 +172,8 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
                 }
                 imageView.setHole(null);
                 imageView.invalidate();
+                typeS.push('h');
+                menu.findItem(R.id.undo).setEnabled(true);
                 return true;
             default :
                 return super.onTouchEvent(event);
@@ -195,11 +209,26 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
             case R.id.delete:
                 option=Option.DELETE;
                 return true;
+            case R.id.undo:
+                undo();
+                return true;
             case R.id.save:
                 return save();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void undo() {
+        char c=typeS.pop();
+        polygon.removeLast(c);
+        if(typeS.isEmpty())
+            menu.findItem(R.id.undo).setEnabled(false);
+        if(c=='s')
+            menu.findItem(R.id.add_start_point).setEnabled(true);
+        if(c=='e')
+            menu.findItem(R.id.add_end_point).setEnabled(true);
+        imageView.invalidate();
     }
 
     public Polygon getPolygon(){ return polygon; }

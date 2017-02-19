@@ -44,9 +44,9 @@ public class GameActivity extends Activity
         //GET intent - which polygon to load
         //TODO: get info about polygon and load it
         Intent intent = getIntent();
-        controller.nameOfDrawingToLoad = intent.getStringExtra(MainActivity.NAME_OF_DRAWING);
-        if (controller.nameOfDrawingToLoad != null) {
-            model.loadPolygonFromFile(controller.nameOfDrawingToLoad,this);
+        controller.nameOfPolygonToLoad = intent.getStringExtra(MainActivity.NAME_OF_DRAWING);
+        if (controller.nameOfPolygonToLoad != null) {
+            model.loadPolygonFromFile(controller.nameOfPolygonToLoad,this);
         } else
             controller.loadPolygon("", getApplicationContext());
 

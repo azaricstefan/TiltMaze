@@ -14,7 +14,7 @@ public class Controller {
     Polygon model;
     MyImageView imageView;
     private long lastMesurement=-1;
-    String nameOfDrawingToLoad;
+    String nameOfPolygonToLoad;
     @CheckResult
     public Polygon getModel() {
         return model;

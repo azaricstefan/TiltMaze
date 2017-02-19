@@ -16,8 +16,8 @@ public class DbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + DBGame.GameEntry.TABLE_NAME + " (" +
             DBGame.GameEntry._ID + " INTEGER PRIMARY KEY," +
             DBGame.GameEntry.COLUMN_PLAYER_NAME + " TEXT," +
-            DBGame.GameEntry.COLUMN_POLYGON_NAME + "TEXT," +
-            DBGame.GameEntry.COLUMN_SCORE_TIME + "REAL);";
+            DBGame.GameEntry.COLUMN_POLYGON_NAME + " TEXT," +
+            DBGame.GameEntry.COLUMN_SCORE_TIME + " REAL);";
 
     //DELETE TABLE
     private static final String SQL_DELETE_TABLE_TILT_MAZE =

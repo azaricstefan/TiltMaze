@@ -29,7 +29,8 @@ public class DbOperationsHelper {
         Cursor cursor = null;
         try{
             SQLiteDatabase db = dbHelper.getReadableDatabase();
-            String columns[] = {DBGame.GameEntry._ID,
+            String columns[] = {
+                    DBGame.GameEntry._ID,
                     DBGame.GameEntry.COLUMN_PLAYER_NAME,
                     DBGame.GameEntry.COLUMN_POLYGON_NAME,
                     DBGame.GameEntry.COLUMN_SCORE_TIME};
@@ -101,7 +102,8 @@ public class DbOperationsHelper {
         values.put(DBGame.GameEntry.COLUMN_POLYGON_NAME, polygonName);
         values.put(DBGame.GameEntry.COLUMN_SCORE_TIME, scoreTime);
 
-        return db.insert(DBGame.GameEntry.TABLE_NAME, null, values);
+        long id = db.insert(DBGame.GameEntry.TABLE_NAME, null, values);
+        return id;
     }
 
     //DELETE

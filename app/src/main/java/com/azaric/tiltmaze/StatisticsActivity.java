@@ -48,6 +48,7 @@ public class StatisticsActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
+
         //GET GUI ELEMENTS
         titleTextView = (TextView) findViewById(R.id.statisticsTitleTextView);
         listView = (ListView) findViewById(R.id.statisticsListView);

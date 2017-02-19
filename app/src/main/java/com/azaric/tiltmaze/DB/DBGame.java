@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
  * Created in project with name: "Tiltmaze"
  */
 
-public class DBGameModel implements BaseColumns {
+public class DBGame implements BaseColumns {
 
     public static class GameEntry implements BaseColumns{
         public static final String TABLE_NAME = "GAME";

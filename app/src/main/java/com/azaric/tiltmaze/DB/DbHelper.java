@@ -13,15 +13,15 @@ public class DbHelper extends SQLiteOpenHelper {
 
     //CREATE TABLE
     private static final String SQL_CREATE_TABLE_TILT_MAZE =
-            "CREATE TABLE " + DBGameModel.GameEntry.TABLE_NAME + " (" +
-            DBGameModel.GameEntry._ID + " INTEGER PRIMARY KEY," +
-            DBGameModel.GameEntry.COLUMN_PLAYER_NAME + " TEXT," +
-            DBGameModel.GameEntry.COLUMN_POLYGON_NAME + "TEXT," +
-            DBGameModel.GameEntry.COLUMN_SCORE_TIME + "REAL);";
+            "CREATE TABLE " + DBGame.GameEntry.TABLE_NAME + " (" +
+            DBGame.GameEntry._ID + " INTEGER PRIMARY KEY," +
+            DBGame.GameEntry.COLUMN_PLAYER_NAME + " TEXT," +
+            DBGame.GameEntry.COLUMN_POLYGON_NAME + "TEXT," +
+            DBGame.GameEntry.COLUMN_SCORE_TIME + "REAL);";
 
     //DELETE TABLE
     private static final String SQL_DELETE_TABLE_TILT_MAZE =
-            "DROP TABLE IF EXISTS " + DBGameModel.GameEntry.TABLE_NAME;
+            "DROP TABLE IF EXISTS " + DBGame.GameEntry.TABLE_NAME;
 
     //DATABASE INFORMATION
     private static final int DATABASE_VERSION = 1;

@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import com.azaric.tiltmaze.DB.DBGameModel;
+
 /**
  * Created by Stefan on 17-Feb-17 | 01:57.
  * Created in project with name: "Tiltmaze"
@@ -22,27 +22,30 @@ public class DbOperationsHelper {
     //SELECT
 
     /**
-     * Get all the info about all statistics {@link com.azaric.tiltmaze.DB.DBGameModel.GameEntry}
+     * Get all the info about all statistics {@link DBGame.GameEntry}
      * @return {@link Cursor} cursor with the details
      */
     public Cursor getAllStatistic(){
         Cursor cursor = null;
         try{
             SQLiteDatabase db = dbHelper.getReadableDatabase();
-            String columns[] = {DBGameModel.GameEntry._ID,
-                    DBGameModel.GameEntry.COLUMN_PLAYER_NAME,
-                    DBGameModel.GameEntry.COLUMN_POLYGON_NAME,
-                    DBGameModel.GameEntry.COLUMN_SCORE_TIME};
-            String orderBy = DBGameModel.GameEntry.COLUMN_SCORE_TIME + " DESC"; //TODO: TEST if order of statistic is good
+            String columns[] = {DBGame.GameEntry._ID,
+                    DBGame.GameEntry.COLUMN_PLAYER_NAME,
+                    DBGame.GameEntry.COLUMN_POLYGON_NAME,
+                    DBGame.GameEntry.COLUMN_SCORE_TIME};
+            String orderBy = DBGame.GameEntry.COLUMN_SCORE_TIME + " DESC"; //TODO: TEST if order of statistic is good
             cursor = db.query(
-                    DBGameModel.GameEntry.TABLE_NAME,
+                    true,
+                    DBGame.GameEntry.TABLE_NAME,
                     columns,
                     null,
                     null,
                     null,
                     null,
-                    orderBy
-            );
+                    orderBy,
+                    null);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,23 +54,26 @@ public class DbOperationsHelper {
 
     /**
      * This is used for getting info about one polygon statistics.
-     * @param id id of the Polygon to filter
+     * @param nameOfPolygon name of the Polygon to filter
      * @return {@link Cursor} cursor with the details
      */
-    public Cursor getSingleStatistic(long id){
+    public Cursor getSingleStatistic(String nameOfPolygon){
         Cursor cursor = null;
         try{
             SQLiteDatabase db = dbHelper.getReadableDatabase();
-            String columns[] = {DBGameModel.GameEntry._ID,
-                    DBGameModel.GameEntry.COLUMN_PLAYER_NAME,
-                    DBGameModel.GameEntry.COLUMN_POLYGON_NAME,
-                    DBGameModel.GameEntry.COLUMN_SCORE_TIME};
-            String orderBy = DBGameModel.GameEntry.COLUMN_SCORE_TIME + " DESC"; //TODO: TEST if order of statistic is good
+            String columns[] = {DBGame.GameEntry._ID,
+                    DBGame.GameEntry.COLUMN_PLAYER_NAME,
+                    DBGame.GameEntry.COLUMN_POLYGON_NAME,
+                    DBGame.GameEntry.COLUMN_SCORE_TIME};
+            String selection = DBGame.GameEntry.COLUMN_POLYGON_NAME+ " = ?";
+            String selectionArgs[] = {nameOfPolygon};
+
+            String orderBy = DBGame.GameEntry.COLUMN_SCORE_TIME + " DESC"; //TODO: TEST if order of statistic is good
             cursor = db.query(
-                    DBGameModel.GameEntry.TABLE_NAME,
+                    DBGame.GameEntry.TABLE_NAME,
                     columns,
-                    null,
-                    null,
+                    selection,
+                    selectionArgs,
                     null,
                     null,
                     orderBy
@@ -91,11 +97,11 @@ public class DbOperationsHelper {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(DBGameModel.GameEntry.COLUMN_PLAYER_NAME, playerName);
-        values.put(DBGameModel.GameEntry.COLUMN_POLYGON_NAME, polygonName);
-        values.put(DBGameModel.GameEntry.COLUMN_SCORE_TIME, scoreTime);
+        values.put(DBGame.GameEntry.COLUMN_PLAYER_NAME, playerName);
+        values.put(DBGame.GameEntry.COLUMN_POLYGON_NAME, polygonName);
+        values.put(DBGame.GameEntry.COLUMN_SCORE_TIME, scoreTime);
 
-        return db.insert(DBGameModel.GameEntry.TABLE_NAME, null, values);
+        return db.insert(DBGame.GameEntry.TABLE_NAME, null, values);
     }
 
     //DELETE
@@ -106,7 +112,7 @@ public class DbOperationsHelper {
     public void resetAllStatistics(){
         //TODO: TEST DB code for resetting all stats
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.delete(DBGameModel.GameEntry.TABLE_NAME, null, null);
+        db.delete(DBGame.GameEntry.TABLE_NAME, null, null);
     }
 
     /**
@@ -117,29 +123,9 @@ public class DbOperationsHelper {
         //TODO: TEST DB code for resetting single stats
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        String whereClause = DBGameModel.GameEntry._ID + "=?" ;
+        String whereClause = DBGame.GameEntry._ID + "=?" ;
         String[] whereArgs = { "" + id };
-        db.delete(DBGameModel.GameEntry.TABLE_NAME, whereClause, whereArgs);
+        db.delete(DBGame.GameEntry.TABLE_NAME, whereClause, whereArgs);
     }
 
-    /**
-     * Get all statistics in String[]
-     * @return @{@link String} array with polygonName and id
-     */
-    public String[] getAllStatisticStrings() {
-        String[] ret = null;
-        Cursor c = getAllStatistic();
-
-        if(c != null) {
-            int numOfRows = c.getCount(), i = 0;
-            ret = new String[numOfRows];
-
-            while (c.moveToNext()) {
-                String polygonName = c.getString(c.getColumnIndex(DBGameModel.GameEntry.COLUMN_POLYGON_NAME));
-                long id = c.getLong(c.getColumnIndex(DBGameModel.GameEntry._ID));
-                ret[i++] = polygonName + ":" + id;
-            }
-        }
-        return ret;
-    }
 }

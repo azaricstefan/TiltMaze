@@ -35,13 +35,14 @@ public class DbOperationsHelper {
                     DBGame.GameEntry.COLUMN_POLYGON_NAME,
                     DBGame.GameEntry.COLUMN_SCORE_TIME};
             String orderBy = DBGame.GameEntry.COLUMN_SCORE_TIME + " DESC"; //TODO: TEST if order of statistic is good
+            String groupBy = DBGame.GameEntry.COLUMN_POLYGON_NAME;
             cursor = db.query(
                     true,
                     DBGame.GameEntry.TABLE_NAME,
                     columns,
                     null,
                     null,
-                    null,
+                    groupBy,
                     null,
                     orderBy,
                     null);
@@ -119,14 +120,14 @@ public class DbOperationsHelper {
 
     /**
      * Delete row with the id of the chosen statistics.
-     * @param id id of the chosen statistics
+     * @param nameOfPolygon name of the chosen polygon statistics
      */
-    public void resetStatistic(int id){
+    public void resetStatistic(String nameOfPolygon){
         //TODO: TEST DB code for resetting single stats
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        String whereClause = DBGame.GameEntry._ID + "=?" ;
-        String[] whereArgs = { "" + id };
+        String whereClause = DBGame.GameEntry.COLUMN_POLYGON_NAME + "=?" ;
+        String[] whereArgs = { "" + nameOfPolygon };
         db.delete(DBGame.GameEntry.TABLE_NAME, whereClause, whereArgs);
     }
 

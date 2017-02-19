@@ -81,7 +81,7 @@ public class StatisticsActivity extends Activity
         switch (item.getItemId()) {
             case R.id.delete_statistic_for_selected_polygon:
                 //TODO: DELETE STATISTICS FOR SELECTED POLYGON and return main activity
-                dbOperationsHelper.resetStatistic(item.getItemId()); //DEBUG
+                dbOperationsHelper.resetStatistic(nameOfTrack); //DEBUG
                 return true;
             case R.id.delete_all_statistics:
                 dbOperationsHelper.resetAllStatistics();
@@ -123,7 +123,7 @@ public class StatisticsActivity extends Activity
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String nameOfTrack = (String) parent.getItemAtPosition(position);
-
+        this.nameOfTrack = nameOfTrack;
         myCursorAdapter = new SingleStatsCursorAdapter(this,dbOperationsHelper.getSingleStatistic(nameOfTrack));
         listView.setAdapter(myCursorAdapter);
         menu.findItem(R.id.delete_statistic_for_selected_polygon).setVisible(true);

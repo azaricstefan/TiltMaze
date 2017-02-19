@@ -43,7 +43,8 @@ public class MainActivity extends Activity
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startGameActivity("");
+                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                startActivity(intent);
             }
         });
 

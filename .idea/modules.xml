@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Tiltmaze.iml" filepath="$PROJECT_DIR$/Tiltmaze.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TiltMaze.iml" filepath="$PROJECT_DIR$/TiltMaze.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

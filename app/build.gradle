@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "24.0.3"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
     defaultConfig {
         applicationId "com.azaric.tiltmaze"
-        minSdkVersion 23
-        targetSdkVersion 25
+        minSdkVersion 21
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {

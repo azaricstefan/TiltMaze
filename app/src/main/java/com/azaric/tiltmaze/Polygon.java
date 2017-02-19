@@ -174,6 +174,19 @@ public class Polygon {
     }
 
     public void savePolygon(String name, Context context) {
+        double scaleW=(width/height);
+        height=1;
+        width=1;
+        for(Wall wall:walls)
+        {
+            wall.setxE(wall.getxE()/scaleW);
+            wall.setxS(wall.getxS() / scaleW);
+        }
+        for(Point p:holes)
+            p.setX(p.getX()/scaleW);
+        endPoint.setX(endPoint.getX()/scaleW);
+        startPoint.setX(startPoint.getX()/scaleW);
+
         File file = new File(context.getExternalFilesDir(null), name);
         FileWriter writer = null;
         try {
@@ -218,7 +231,7 @@ public class Polygon {
     }
 
     public void loadPolygonFromFile(String name, Context context) {
-        width=height=1; //da li je ovo potrebno?
+        width=height=1;
         File file = new File(context.getExternalFilesDir(null), name);
         FileReader reader = null;
         try{
@@ -235,7 +248,7 @@ public class Polygon {
 
             //END POINT READ
             String endPoint = bufferedReader.readLine();
-            String[] endPointArray = startPoint.split(":");
+            String[] endPointArray = endPoint.split(":");
             this.endPoint = new Point();
             this.endPoint.setX(Double.parseDouble(endPointArray[0]));
             this.endPoint.setY(Double.parseDouble(endPointArray[1]));
@@ -275,8 +288,8 @@ public class Polygon {
                 String loadedYend = wallArray[3];
 
                 Wall w = new Wall(
-                        Double.parseDouble(loadedXstart),Double.parseDouble(loadedXend),
-                        Double.parseDouble(loadedYstart),Double.parseDouble(loadedYend));
+                        Double.parseDouble(loadedXstart),Double.parseDouble(loadedYstart),
+                        Double.parseDouble(loadedXend), Double.parseDouble(loadedYend));
                 walls.add(w);
             }
 

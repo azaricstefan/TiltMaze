@@ -351,6 +351,7 @@ public class Polygon {
                 Log.d("kraj", "kraja");
                 finish=true;
                 win=false;
+                //
                 return;
             }
 
@@ -366,6 +367,7 @@ public class Polygon {
             startPoint=nh;
             finish=true;
             win=true;
+            //dialog
             return;
         }
         for(Wall w:walls)
@@ -488,4 +490,7 @@ public class Polygon {
         }
     }
 
+    public boolean isGameOver() {
+        return finish && win;
+    }
 }

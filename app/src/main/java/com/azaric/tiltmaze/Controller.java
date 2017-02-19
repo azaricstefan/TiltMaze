@@ -15,6 +15,7 @@ public class Controller {
     MyImageView imageView;
     private long lastMesurement=-1;
     String nameOfPolygonToLoad;
+
     @CheckResult
     public Polygon getModel() {
         return model;
@@ -34,7 +35,9 @@ public class Controller {
     }
 
 
-
+    public String getNameOfPolygonToLoad() {
+        return nameOfPolygonToLoad;
+    }
 
     public void addNewAccelerometerValues(float x, float y, long time) {
         if(lastMesurement==-1)

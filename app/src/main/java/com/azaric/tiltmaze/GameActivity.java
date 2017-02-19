@@ -1,12 +1,17 @@
 package com.azaric.tiltmaze;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+
+import com.azaric.tiltmaze.DB.DbOperationsHelper;
+import com.azaric.tiltmaze.Dialog.NameDialog;
+import com.azaric.tiltmaze.Dialog.SaveDialog;
 
 public class GameActivity extends Activity
         implements
@@ -18,12 +23,20 @@ public class GameActivity extends Activity
 
     SensorManager sensorManager;
     Sensor accelerometer;
+    DbOperationsHelper dbOperationsHelper;
+
+    private long startTime;
+    private long endTime;
+    private float gameTime = 0;
+    private float score;
+    private boolean firstTime = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        startTime = System.currentTimeMillis();
 
         //create model and controller
         controller = new Controller();
@@ -35,6 +48,8 @@ public class GameActivity extends Activity
         imageView.setController(this,controller);
         controller.setImageView(imageView);
         imageView.setModel(model);
+
+        dbOperationsHelper = new DbOperationsHelper(this);
 
         //SENSOR CODE
         sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
@@ -74,6 +89,16 @@ public class GameActivity extends Activity
         long time = event.timestamp;
 
         controller.addNewAccelerometerValues(x, y, time);
+        boolean win = model.isGameOver(); //TODO: returns true
+        if(win && firstTime){
+            firstTime = false;
+            endTime = System.currentTimeMillis();
+            score = getGameTime();
+            //otvori dialog
+            DialogFragment nameDialog = new NameDialog();
+            nameDialog.show(getFragmentManager(), "nameDialog");
+        }
+
     }
 
     @Override
@@ -84,7 +109,7 @@ public class GameActivity extends Activity
     public void onBackPressed() {/*
         if(controller.nameOfDrawingToLoad!=null)
         {
-            DialogFragment backPressedDialog = new BPDialog2();
+            DialogFragment backPressedDialog = new NameDialog();
             backPressedDialog.show(getFragmentManager(), "BackPressedDialogWithName");
         }
         else
@@ -98,4 +123,11 @@ public class GameActivity extends Activity
     }
 
     public Controller getController() { return controller; }
+
+    public DbOperationsHelper getDbOperationsHelper() { return dbOperationsHelper; }
+
+    public void setStartTime(long startTime) { this.startTime = startTime; }
+    public void setEndTime(long endTime) { this.endTime = endTime; }
+    public float getScore() { return score; }
+    public float getGameTime() { return gameTime + (((float)(endTime - startTime)) / 1000f); }
 }

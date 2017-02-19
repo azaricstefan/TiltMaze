@@ -10,7 +10,8 @@ import com.azaric.tiltmaze.GameActivity;
 import com.azaric.tiltmaze.StatisticsActivity;
 
 /**
- * Created by Stefan on 1/16/17.
+ * Created by Stefan on 1/16/17 | 00:00.
+ * Created in project with name: "Tiltmaze"
  */
 public class StatisticsDialogResetAll extends DialogFragment {
 

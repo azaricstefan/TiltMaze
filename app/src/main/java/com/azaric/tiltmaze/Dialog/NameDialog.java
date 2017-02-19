@@ -14,7 +14,8 @@ import com.azaric.tiltmaze.MainActivity;
 import com.azaric.tiltmaze.NewTerrainActivity;
 
 /**
- * Created by Stefan on 1/16/17.
+ * Created by Stefan on 1/16/17 | 00:00.
+ * Created in project with name: "Tiltmaze"
  */
 public class NameDialog extends DialogFragment {
 

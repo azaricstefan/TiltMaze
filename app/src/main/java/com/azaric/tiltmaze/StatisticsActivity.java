@@ -1,6 +1,7 @@
 package com.azaric.tiltmaze;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -23,6 +24,9 @@ import android.widget.Toast;
 
 import com.azaric.tiltmaze.DB.DBGame;
 import com.azaric.tiltmaze.DB.DbOperationsHelper;
+import com.azaric.tiltmaze.Dialog.SaveDialog;
+import com.azaric.tiltmaze.Dialog.StatisticsDialogResetAll;
+import com.azaric.tiltmaze.Dialog.StatisticsDialogResetSingle;
 
 import java.io.File;
 import java.util.HashMap;
@@ -82,10 +86,15 @@ public class StatisticsActivity extends Activity
         switch (item.getItemId()) {
             case R.id.delete_statistic_for_selected_polygon:
                 //TODO: DELETE STATISTICS FOR SELECTED POLYGON and return main activity
-                dbOperationsHelper.resetStatistic(nameOfTrack); //DEBUG
+                //SHOW DIALOG
+                DialogFragment resetSingleDialog = new StatisticsDialogResetSingle();
+                resetSingleDialog.show(getFragmentManager(), "resetSingleDialog");
+                //dbOperationsHelper.resetStatistic(nameOfTrack); //DEBUG
                 return true;
             case R.id.delete_all_statistics:
-                dbOperationsHelper.resetAllStatistics();
+                DialogFragment resetAllDialog = new StatisticsDialogResetAll();
+                resetAllDialog.show(getFragmentManager(), "resetAllDialog");
+                //dbOperationsHelper.resetAllStatistics();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -133,6 +142,9 @@ public class StatisticsActivity extends Activity
 
 
     }
+
+    public String getNameOfPolygon(){ return  nameOfTrack; }
+    public DbOperationsHelper getDbOperationsHelper(){ return dbOperationsHelper; }
 
     public class SingleStatsCursorAdapter extends CursorAdapter{
 

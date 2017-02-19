@@ -12,49 +12,45 @@ import android.widget.LinearLayout;
 import com.azaric.tiltmaze.GameActivity;
 import com.azaric.tiltmaze.MainActivity;
 import com.azaric.tiltmaze.NewTerrainActivity;
+import com.azaric.tiltmaze.StatisticsActivity;
+
 
 /**
- * Created by Stefan on 1/16/17 | 00:00.
+ * Created by Stefan on 15-Jan-17 | 23:28.
  * Created in project with name: "Tiltmaze"
  */
-public class NameDialog extends DialogFragment {
 
-    EditText playerName;
+public class CreateTerrainSaveDialog extends DialogFragment {
 
-    GameActivity myActivity;
+    EditText input;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        myActivity = (GameActivity) getActivity();
-
-        playerName =  new EditText(getActivity());
+        input =  new EditText(getActivity());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
         );
-        playerName.setLayoutParams(lp);
+        input.setLayoutParams(lp);
 
-        builder.setMessage("Unesite vaše ime:")
-                .setTitle("Pobedili ste!")
-                .setView(playerName)
+        builder.setMessage("Unesi ime poligona:")
+                .setTitle("Dialog za čuvanje poligona")
+                .setView(input)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        myActivity
-                                .getDbOperationsHelper()
-                                .insert(
-                                        playerName.getText().toString(),
-                                        myActivity.getController().getNameOfPolygonToLoad(),
-                                        myActivity.getScore());
+                        ((NewTerrainActivity)getActivity())
+                                .getPolygon()
+                                .savePolygon(input.getText().toString(), getActivity());
                         getActivity().finish();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
-                        getActivity().finish();
+                        //getActivity().finish();
                     }
                 });
         // Create the AlertDialog object and return it

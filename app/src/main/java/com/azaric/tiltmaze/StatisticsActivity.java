@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,21 +14,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.azaric.tiltmaze.DB.DBGame;
 import com.azaric.tiltmaze.DB.DbOperationsHelper;
-import com.azaric.tiltmaze.Dialog.SaveDialog;
 import com.azaric.tiltmaze.Dialog.StatisticsDialogResetAll;
 import com.azaric.tiltmaze.Dialog.StatisticsDialogResetSingle;
-
-import java.io.File;
-import java.util.HashMap;
 
 public class StatisticsActivity extends Activity
         implements
@@ -157,7 +148,7 @@ public class StatisticsActivity extends Activity
             String playerName = cursor.getString(cursor.getColumnIndex(DBGame.GameEntry.COLUMN_PLAYER_NAME));
             double result = cursor.getDouble(cursor.getColumnIndex(DBGame.GameEntry.COLUMN_SCORE_TIME));
             TextView textView = (TextView)view;
-            textView.setText("Player name: " + playerName + "Result: " + result );
+            textView.setText("Player name: " + playerName + " Result(s): " + result );
 
         }
 

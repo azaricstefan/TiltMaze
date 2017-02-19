@@ -11,8 +11,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.azaric.tiltmaze.DB.DbOperationsHelper;
-import com.azaric.tiltmaze.Dialog.NameDialog;
-import com.azaric.tiltmaze.Dialog.SaveDialog;
+import com.azaric.tiltmaze.Dialog.GameNameDialog;
 
 public class GameActivity extends Activity
         implements
@@ -100,7 +99,7 @@ public class GameActivity extends Activity
                 t = Toast.makeText(this,"Pobedili ste",Toast.LENGTH_LONG);
                 t.show();
                 //otvori dialog
-                DialogFragment nameDialog = new NameDialog();
+                DialogFragment nameDialog = new GameNameDialog();
                 nameDialog.show(getFragmentManager(), "nameDialog");
             } else {
                 Toast t;
@@ -120,12 +119,12 @@ public class GameActivity extends Activity
     public void onBackPressed() {/*
         if(controller.nameOfDrawingToLoad!=null)
         {
-            DialogFragment backPressedDialog = new NameDialog();
+            DialogFragment backPressedDialog = new GameNameDialog();
             backPressedDialog.show(getFragmentManager(), "BackPressedDialogWithName");
         }
         else
         {
-            DialogFragment backPressedDialog = new SaveDialog();
+            DialogFragment backPressedDialog = new CreateTerrainSaveDialog();
             backPressedDialog.show(getFragmentManager(), "BackPressedDialogTadWithoutName");
         }*/
         //TODO ako je WIN situacija pitaj za ime pokreni dialog i Toast sa (POBEDIO SI)

@@ -33,7 +33,7 @@ public class DbOperationsHelper {
                     DBGameModel.GameEntry.COLUMN_PLAYER_NAME,
                     DBGameModel.GameEntry.COLUMN_POLYGON_NAME,
                     DBGameModel.GameEntry.COLUMN_SCORE_TIME};
-            String orderBy = DBGameModel.GameEntry.COLUMN_SCORE_TIME + " DESC"; //TODO: check if order of statistic is good
+            String orderBy = DBGameModel.GameEntry.COLUMN_SCORE_TIME + " DESC"; //TODO: TEST if order of statistic is good
             cursor = db.query(
                     DBGameModel.GameEntry.TABLE_NAME,
                     columns,
@@ -62,7 +62,7 @@ public class DbOperationsHelper {
                     DBGameModel.GameEntry.COLUMN_PLAYER_NAME,
                     DBGameModel.GameEntry.COLUMN_POLYGON_NAME,
                     DBGameModel.GameEntry.COLUMN_SCORE_TIME};
-            String orderBy = DBGameModel.GameEntry.COLUMN_SCORE_TIME + " DESC"; //TODO: check if order of statistic is good
+            String orderBy = DBGameModel.GameEntry.COLUMN_SCORE_TIME + " DESC"; //TODO: TEST if order of statistic is good
             cursor = db.query(
                     DBGameModel.GameEntry.TABLE_NAME,
                     columns,

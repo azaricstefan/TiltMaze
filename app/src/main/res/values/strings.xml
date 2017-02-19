@@ -78,4 +78,8 @@
     <string name="delete_stats_for_selected_polygon">Delete stats for selected polygon</string>
     <string name="delete_all_statistics">Delete all statistics</string>
     <string name="statistics">Statistics</string>
+    <string name="traction_summary">Choose traction value (default 0.5)</string>
+    <string name="traction_title">Traction</string>
+    <string name="wall_hit_summary">How much percentage ball loses when hits wall</string>
+    <string name="wall_hit_title">Wall hit defect</string>
 </resources>

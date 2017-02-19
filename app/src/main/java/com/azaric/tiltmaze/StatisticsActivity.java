@@ -48,6 +48,7 @@ public class StatisticsActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+        setTitle("Tilt maze STATISTICS");
 
         //GET GUI ELEMENTS
         titleTextView = (TextView) findViewById(R.id.statisticsTitleTextView);

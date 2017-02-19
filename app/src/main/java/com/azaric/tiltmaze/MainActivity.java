@@ -38,6 +38,7 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("Tilt maze MAIN");
 
         textView = (TextView) findViewById(R.id.textViewMainStatus);
         listView = (ListView) findViewById(R.id.mainActivityListView);

@@ -1,6 +1,8 @@
 package com.azaric.tiltmaze;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -28,10 +30,9 @@ public class Polygon {
     private boolean finish;
     private boolean win;
 
-    public Polygon(Controller.MyPlayer myPlayer)
-    {
-        this.myPlayer=myPlayer;
-    }
+    private final Context context;
+
+    public Polygon(Controller.MyPlayer myPlayer, Context context) { this.myPlayer=myPlayer; this.context = context; }
     public void  makePolygon(double height, double width) {
         this.height=height;
         this.width=width;
@@ -197,7 +198,6 @@ public class Polygon {
         try {
             writer = new FileWriter(file);
 
-            //TODO: TAMARA: proveri to za sklaliranje
             //START POINT
             double x = startPoint.getX();
             double y = startPoint.getY();
@@ -240,7 +240,6 @@ public class Polygon {
         File file = new File(context.getExternalFilesDir(null), name);
         FileReader reader = null;
         try{
-            //TODO: TAMARA: proveri to za sklaliranje
             reader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(reader);
 
@@ -324,11 +323,15 @@ public class Polygon {
 
     double velocityX = 0, velocityY = 0;
 
-    private  double traction=0.2;//TODO SETTINGS
-    private  double collision=0.7; //TODO SETTINGS
+    private  double traction=0.2;
+    private  double collision=0.7;
     private double accTimeFactor = 1000000;
     private double g=9.81;
     public void setVelocity(float y, float x, long delta) {
+        //get data from settings
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        traction = Double.parseDouble(sharedPreferences.getString(context.getString(R.string.preference_traction_key), "0.2"));
+        collision = Double.parseDouble(sharedPreferences.getString(context.getString(R.string.preference_collision), "0.7"));
 
         velocityX = velocityX+ x * delta /width/accTimeFactor/g/g;
         velocityY = velocityY+ y * delta / height/accTimeFactor/g/g;

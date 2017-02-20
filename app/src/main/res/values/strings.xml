@@ -79,8 +79,11 @@
     <string name="delete_all_statistics">Delete all statistics</string>
     <string name="statistics">Statistics</string>
     <string name="traction_summary">Choose traction value (default 0.5)</string>
-    <string name="traction_title">Traction</string>
+    <string name="traction_title">Traction (0..1)</string>
     <string name="wall_hit_summary">How much percentage ball loses when hits wall</string>
-    <string name="wall_hit_title">Wall hit defect</string>
+    <string name="wall_hit_title">Wall hit defect (0..1)</string>
     <string name="choose_polygon">Choose polygon</string>
+    <string name="preference_traction_key">TRACTION_KEY</string>
+    <string name="preference_collision">BUMP_KEY</string>
+    <string name="preference_player_name">PLAYER_NAME</string>
 </resources>

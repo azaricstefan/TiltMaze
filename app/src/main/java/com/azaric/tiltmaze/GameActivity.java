@@ -42,7 +42,7 @@ public class GameActivity extends Activity
 
         //create model and controller
         controller = new Controller();
-        model = new Polygon(this);
+        model = new Polygon(this,getApplicationContext());
         controller.setModel(model);
 
         //create imageView and connect it with model and controller

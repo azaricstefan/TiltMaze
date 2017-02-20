@@ -6,7 +6,7 @@
             android:capitalize="words"
             android:defaultValue="@string/pref_default_display_name"
             android:inputType="textCapWords"
-            android:key="PLAYER_NAME"
+            android:key="@string/preference_player_name"
             android:maxLines="1"
             android:selectAllOnFocus="true"
             android:singleLine="true"
@@ -14,30 +14,17 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="Advanced">
         <EditTextPreference
-            android:defaultValue="3.75"
-            android:inputType="numberSigned|numberDecimal"
-            android:key="K"
-            android:summary="Opis za koeficijent K"
-            android:title="K" />
-
-        <EditTextPreference
-            android:defaultValue="-9.57"
-            android:inputType="numberSigned|numberDecimal"
-            android:key="N"
-            android:summary="Opis za koeficijent N"
-            android:title="N" />
-
-        <EditTextPreference
-            android:defaultValue="20"
-            android:inputType="numberSigned|numberDecimal"
-            android:key="BUMP_KEY"
+            android:defaultValue="0.7"
+            android:inputType="numberDecimal"
+            android:key="@string/preference_collision"
             android:summary="@string/wall_hit_summary"
             android:title="@string/wall_hit_title" />
 
         <EditTextPreference
             android:defaultValue="0.5"
             android:inputType="numberDecimal"
-            android:key="TRACTION_KEY"
+
+            android:key="@string/preference_traction_key"
             android:summary="@string/traction_summary"
             android:title="@string/traction_title" />
     </PreferenceCategory>

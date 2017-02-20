@@ -35,7 +35,7 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
         setTitle("Tilt maze CREATE NEW TERRAIN");
 
         //create imageView and connect it with model and controller
-        polygon=new Polygon(this);
+        polygon=new Polygon(this,getApplicationContext());
         imageView = (NewTerrainImageView) findViewById(R.id.new_terrain_image_view);
         imageView.setModel(polygon);
         imageView.setOnTouchListener(this);

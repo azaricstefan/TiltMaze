@@ -98,14 +98,14 @@ public class GameActivity extends Activity
                 endTime = System.currentTimeMillis();
                 score = getGameTime();
                 Toast t;
-                t = Toast.makeText(this,"Pobedili ste",Toast.LENGTH_LONG);
+                t = Toast.makeText(this,"Pobedili ste",Toast.LENGTH_SHORT);
                 t.show();
                 //otvori dialog
                 DialogFragment nameDialog = new GameNameDialog();
                 nameDialog.show(getFragmentManager(), "nameDialog");
             } else {
                 Toast t;
-                t = Toast.makeText(this,"Izgubili ste",Toast.LENGTH_LONG);
+                t = Toast.makeText(this,"Izgubili ste",Toast.LENGTH_SHORT);
                 t.show();
                 finish();
             }

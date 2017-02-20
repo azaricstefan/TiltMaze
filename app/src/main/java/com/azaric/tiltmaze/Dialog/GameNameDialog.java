@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -13,6 +15,7 @@ import android.widget.LinearLayout;
 import com.azaric.tiltmaze.GameActivity;
 import com.azaric.tiltmaze.MainActivity;
 import com.azaric.tiltmaze.NewTerrainActivity;
+import com.azaric.tiltmaze.R;
 import com.azaric.tiltmaze.StatisticsActivity;
 
 /**
@@ -38,6 +41,8 @@ public class GameNameDialog extends DialogFragment {
                 ViewGroup.LayoutParams.MATCH_PARENT
         );
         playerName.setLayoutParams(lp);
+
+        playerName.setText(getDefaultName());
 
         builder.setMessage("Unesite vaše ime:")
                 .setTitle("Pobedili ste!")
@@ -69,5 +74,10 @@ public class GameNameDialog extends DialogFragment {
         Intent intent = new Intent(myActivity, StatisticsActivity.class);
         intent.putExtra(StatisticsActivity.STATISTICS_SINGLE_TRACK,polygonName);
         startActivity(intent);
+    }
+
+    public String getDefaultName(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(myActivity);
+        return sharedPreferences.getString(myActivity.getString(R.string.preference_player_name), "Petar Petrovic");
     }
 }

@@ -190,11 +190,11 @@ public class SettingsActivity extends PreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("K"));
-            bindPreferenceSummaryToValue(findPreference("N"));
-            bindPreferenceSummaryToValue(findPreference("BUMP_KEY"));
-            bindPreferenceSummaryToValue(findPreference("TRACTION_KEY"));
-            bindPreferenceSummaryToValue(findPreference("PLAYER_NAME"));
+//            bindPreferenceSummaryToValue(findPreference("K"));
+//            bindPreferenceSummaryToValue(findPreference("N"));
+            bindPreferenceSummaryToValue(findPreference(this.getString(R.string.preference_traction_key)));
+            bindPreferenceSummaryToValue(findPreference(this.getString(R.string.preference_collision)));
+            bindPreferenceSummaryToValue(findPreference(this.getString(R.string.preference_player_name)));
         }
 
         @Override

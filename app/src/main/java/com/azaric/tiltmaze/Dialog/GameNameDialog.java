@@ -44,10 +44,10 @@ public class GameNameDialog extends DialogFragment {
 
         playerName.setText(getDefaultName());
 
-        builder.setMessage("Unesite vaše ime:")
-                .setTitle("Pobedili ste!")
+        builder.setMessage(R.string.GameNameMessage)
+                .setTitle(R.string.GameNameTitle)
                 .setView(playerName)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.Dialog_OK, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         myActivity
                                 .getDbOperationsHelper()
@@ -59,7 +59,7 @@ public class GameNameDialog extends DialogFragment {
                         startStatisticsActivity();
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.Dialog_Cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
                         getActivity().finish();
@@ -78,6 +78,6 @@ public class GameNameDialog extends DialogFragment {
 
     public String getDefaultName(){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(myActivity);
-        return sharedPreferences.getString(myActivity.getString(R.string.preference_player_name), "Petar Petrovic");
+        return sharedPreferences.getString(myActivity.getString(R.string.preference_player_name), getString(R.string.dummy_name));
     }
 }

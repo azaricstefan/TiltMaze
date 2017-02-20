@@ -71,7 +71,7 @@
 
     <string name="pref_title_new_message_notifications">New message notifications</string>
 
-    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_title_ringtone" translatable="false">Ringtone</string>
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
@@ -83,7 +83,27 @@
     <string name="wall_hit_summary">How much percentage ball loses when hits wall</string>
     <string name="wall_hit_title">Wall hit defect (0..1)</string>
     <string name="choose_polygon">Choose polygon</string>
-    <string name="preference_traction_key">TRACTION_KEY</string>
-    <string name="preference_collision">BUMP_KEY</string>
-    <string name="preference_player_name">PLAYER_NAME</string>
+    <string name="preference_traction_key" translatable="false">TRACTION_KEY</string>
+    <string name="preference_collision" translatable="false">BUMP_KEY</string>
+    <string name="preference_player_name" translatable="false">PLAYER_NAME</string>
+    <string name="main_there_are_no_available_polygons">There are no available polygons</string>
+    <string name="stats_for_polygon">Statistics for polygon:</string>
+    <string name="Dialog_create_terrain">Would you like to save current polygon?</string>
+    <string name="Dialog_create_terrain_title">Saving of the current polygon</string>
+    <string name="Dialog_create_terrain_toast">Saving is not possible! Insert all the elements.</string>
+    <string name="Dialog_yes">Yes</string>
+    <string name="Dialog_no">No</string>
+    <string name="MainDialogItemLongClick_Deleted">"Polygon successfully deleted: "</string>
+    <string name="MainDialogItemLongClick_message">"Would you like to delete polygon: "</string>
+    <string name="MainDialogItemLongClick_Deleted_title">Deleting of the polygon</string>
+    <string name="GameNameMessage">Type in your name:</string>
+    <string name="GameNameTitle">You have won!</string>
+    <string name="Dialog_OK">Ok</string>
+    <string name="Dialog_Cancel">Cancel</string>
+    <string name="create_terrain_save_dialog_message">Type in name of the polygon:</string>
+    <string name="create_terrain_save_dialog_title">Saving of the polygon</string>
+    <string name="stats_dialog_delete_all_stats_msg">Would you like to delete ALL statistics?</string>
+    <string name="stats_dialog_delete_all_stats_title">Delete ALL statistics</string>
+    <string name="stats_dialog_reset_single_msg">Would you like to delete statistic?</string>
+    <string name="stats_dialog_reset_single_title">Deleting of one statistic</string>
 </resources>

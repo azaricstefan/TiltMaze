@@ -54,7 +54,7 @@ public class StatisticsActivity extends Activity
         Intent intent = getIntent();
         if(intent.hasExtra(STATISTICS_SINGLE_TRACK)){
             nameOfTrack = intent.getStringExtra(STATISTICS_SINGLE_TRACK);
-            titleTextView.setText("Statistics for track: " + nameOfTrack);
+            titleTextView.setText(String.format("%s%s", getString(R.string.stats_for_polygon), nameOfTrack));
             //dodaj sve podatke o JEDNOJ statistici
             myCursorAdapter = new SingleStatsCursorAdapter(this,dbOperationsHelper.getSingleStatistic(nameOfTrack));
             listView.setAdapter(myCursorAdapter);
@@ -135,6 +135,7 @@ public class StatisticsActivity extends Activity
         myCursorAdapter = new SingleStatsCursorAdapter(this,dbOperationsHelper.getSingleStatistic(nameOfTrack));
         listView.setAdapter(myCursorAdapter);
         menu.findItem(R.id.delete_statistic_for_selected_polygon).setVisible(true);
+        titleTextView.setText(String.format("%s%s", getString(R.string.stats_for_polygon), nameOfTrack));
         //OPEN STATS FOR POLYGON AND SHOW THEM
         //TODO: TEST update StatisticsActivity with details about the polygon
 

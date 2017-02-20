@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.azaric.tiltmaze.GameActivity;
 import com.azaric.tiltmaze.MainActivity;
 import com.azaric.tiltmaze.NewTerrainActivity;
+import com.azaric.tiltmaze.R;
 import com.azaric.tiltmaze.StatisticsActivity;
 
 
@@ -36,10 +37,10 @@ public class CreateTerrainSaveDialog extends DialogFragment {
         );
         input.setLayoutParams(lp);
 
-        builder.setMessage("Unesi ime poligona:")
-                .setTitle("Dialog za čuvanje poligona")
+        builder.setMessage(R.string.create_terrain_save_dialog_message)
+                .setTitle(R.string.create_terrain_save_dialog_title)
                 .setView(input)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.Dialog_OK, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         ((NewTerrainActivity)getActivity())
                                 .getPolygon()
@@ -47,7 +48,7 @@ public class CreateTerrainSaveDialog extends DialogFragment {
                         getActivity().finish();
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.Dialog_Cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
                         //getActivity().finish();

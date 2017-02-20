@@ -85,7 +85,7 @@ public class MainActivity extends Activity
                 android.R.layout.simple_list_item_1, namesOfTracks);
         listView.setAdapter(adapter);
         if(namesOfTracks.length == 0){
-            textView.setText("Nema poligona raspolozivih");
+            textView.setText(R.string.main_there_are_no_available_polygons);
         } else textView.setText("");
     }
 

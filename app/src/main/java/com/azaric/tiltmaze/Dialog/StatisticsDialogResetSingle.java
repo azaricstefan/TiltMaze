@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import com.azaric.tiltmaze.R;
 import com.azaric.tiltmaze.StatisticsActivity;
 
 /**
@@ -23,9 +24,9 @@ public class StatisticsDialogResetSingle extends DialogFragment {
 
         myActivity = (StatisticsActivity)getActivity();
 
-        builder.setMessage("Da li zelite da obrisete statistiku?")
-                .setTitle("Brisanje jedne statistike")
-                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.stats_dialog_reset_single_msg)
+                .setTitle(R.string.stats_dialog_reset_single_title)
+                .setPositiveButton(R.string.Dialog_yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         myActivity
                                 .getDbOperationsHelper()
@@ -33,7 +34,7 @@ public class StatisticsDialogResetSingle extends DialogFragment {
                         getActivity().finish();
                     }
                 })
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.Dialog_no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
                         getActivity().finish();

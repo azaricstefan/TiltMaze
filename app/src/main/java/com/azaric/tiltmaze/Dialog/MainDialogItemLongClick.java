@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.azaric.tiltmaze.MainActivity;
+import com.azaric.tiltmaze.R;
 import com.azaric.tiltmaze.StatisticsActivity;
 
 /**
@@ -25,21 +26,21 @@ public class MainDialogItemLongClick extends DialogFragment {
 
         myActivity = (MainActivity)getActivity();
 
-        builder.setMessage("Da li zelite da obrisete poligon: " + myActivity.getPolygonName() + "?")
-                .setTitle("Brisanje poligona")
-                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        builder.setMessage(getString(R.string.MainDialogItemLongClick_message) + myActivity.getPolygonName() + "?")
+                .setTitle(R.string.MainDialogItemLongClick_Deleted_title)
+                .setPositiveButton(R.string.Dialog_yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         myActivity
                                 .deletePolygon(myActivity.getPolygonName());
                         myActivity.updateListView();
                         Toast.makeText(
                                 myActivity,
-                                "Uspešno obrisan poligon: " + myActivity.getPolygonName(),
+                                getString(R.string.MainDialogItemLongClick_Deleted) + myActivity.getPolygonName(),
                                 Toast.LENGTH_LONG)
                                 .show();
                     }
                 })
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.Dialog_no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
                         //getActivity().finish();

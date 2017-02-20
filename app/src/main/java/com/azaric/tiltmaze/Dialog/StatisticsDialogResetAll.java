@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import com.azaric.tiltmaze.GameActivity;
+import com.azaric.tiltmaze.R;
 import com.azaric.tiltmaze.StatisticsActivity;
 
 /**
@@ -22,9 +23,9 @@ public class StatisticsDialogResetAll extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
 
-        builder.setMessage("Da li zelite da obrisete SVU statistiku?")
-                .setTitle("Brisanje SVE statistike")
-                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.stats_dialog_delete_all_stats_msg)
+                .setTitle(R.string.stats_dialog_delete_all_stats_title)
+                .setPositiveButton(R.string.Dialog_yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         ((StatisticsActivity)getActivity())
                                 .getDbOperationsHelper()
@@ -32,7 +33,7 @@ public class StatisticsDialogResetAll extends DialogFragment {
                         getActivity().finish();
                     }
                 })
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.Dialog_Cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
                         getActivity().finish();

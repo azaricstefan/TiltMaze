@@ -33,6 +33,18 @@
             android:screenOrientation="landscape">
 
         </activity>
+
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="service.ACTION_PLAY" >
+                </action>
+                <action android:name="service.ACTION_PAUSE" >
+                </action>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

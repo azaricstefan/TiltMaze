@@ -15,10 +15,16 @@ import java.util.Queue;
 import java.util.Stack;
 import java.util.Vector;
 
-public class NewTerrainActivity extends Activity implements View.OnTouchListener {
+public class NewTerrainActivity extends Activity implements View.OnTouchListener, Controller.MyPlayer {
     Polygon polygon;
 
     private NewTerrainImageView imageView;
+
+    @Override
+    public void play(int i) {
+
+    }
+
     private enum Option {HOLE, START_POINT, END_POINT, WALL, MOVE, DELETE};
     private Option option=Option.WALL;
     private Menu menu;
@@ -30,7 +36,7 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
         setTitle("Tilt maze CRETE NEW TERRAIN");
 
         //create imageView and connect it with model and controller
-        polygon=new Polygon();
+        polygon=new Polygon(this);
         imageView = (NewTerrainImageView) findViewById(R.id.new_terrain_image_view);
         imageView.setModel(polygon);
         imageView.setOnTouchListener(this);

@@ -15,6 +15,7 @@ import java.util.Vector;
  * Created by tamarasekularac on 2/16/17.
  */
 public class Polygon {
+    private Controller.MyPlayer myPlayer;
     private double height;
     private double width;
     private Vector<Wall> walls=new Vector<>();
@@ -27,6 +28,10 @@ public class Polygon {
     private boolean finish;
     private boolean win;
 
+    public Polygon(Controller.MyPlayer myPlayer)
+    {
+        this.myPlayer=myPlayer;
+    }
     public void  makePolygon(double height, double width) {
         this.height=height;
         this.width=width;
@@ -351,6 +356,7 @@ public class Polygon {
                 Log.d("kraj", "kraja");
                 finish=true;
                 win=false;
+                myPlayer.play(2);
                 //
                 return;
             }
@@ -367,6 +373,7 @@ public class Polygon {
             startPoint=nh;
             finish=true;
             win=true;
+            myPlayer.play(1);
             //dialog
             return;
         }
@@ -383,6 +390,7 @@ public class Polygon {
                         startPoint.setX(w.getxS()-rBall-0.001);
                     velocityX=-velocityX*collision;
                     velocityY*=collision;
+                    myPlayer.play(0);
                     Log.d("loptica","xS");
                 }
             }
@@ -396,6 +404,7 @@ public class Polygon {
                     if(startPoint.getX()<w.getxE()+rBall+0.001)
                         startPoint.setX(w.getxE()+rBall+0.001);
                     velocityY*=collision;
+                    myPlayer.play(0);
                     Log.d("loptica","xE");
                 }
             }
@@ -409,6 +418,7 @@ public class Polygon {
                         startPoint.setY(w.getyS()-rBall-0.001);
                     velocityY=-velocityY*collision;
                     velocityX*=collision;
+                    myPlayer.play(0);
                     Log.d("loptica","yS");
                 }
             }
@@ -421,6 +431,7 @@ public class Polygon {
                         startPoint.setY(w.getyE()+rBall+0.001);
                     velocityY=-velocityY*collision;
                     velocityX*=collision;
+                    myPlayer.play(0);
                     Log.d("loptica","yE");
                 }
             }

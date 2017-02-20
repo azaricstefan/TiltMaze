@@ -11,6 +11,10 @@ import android.util.Log;
  */
 
 public class Controller {
+    public interface MyPlayer{
+        void play(int i);
+    }
+
     Polygon model;
     MyImageView imageView;
     private long lastMesurement=-1;
@@ -40,6 +44,8 @@ public class Controller {
     }
 
     public void addNewAccelerometerValues(float x, float y, long time) {
+        if(model.isGameOver())
+            return;
         if(lastMesurement==-1)
         {
             lastMesurement=time;

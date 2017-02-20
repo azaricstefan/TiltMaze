@@ -8,6 +8,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.azaric.tiltmaze.DB.DbOperationsHelper;
@@ -16,11 +18,11 @@ import com.azaric.tiltmaze.Dialog.SaveDialog;
 
 public class GameActivity extends Activity
         implements
-        SensorEventListener {
+        SensorEventListener, Controller.MyPlayer {
 
     Controller controller;
     Polygon model;
-
+    Intent services;
 
     SensorManager sensorManager;
     Sensor accelerometer;
@@ -41,7 +43,7 @@ public class GameActivity extends Activity
 
         //create model and controller
         controller = new Controller();
-        model = new Polygon();
+        model = new Polygon(this);
         controller.setModel(model);
 
         //create imageView and connect it with model and controller
@@ -141,4 +143,13 @@ public class GameActivity extends Activity
     public void setEndTime(long endTime) { this.endTime = endTime; }
     public float getScore() { return score; }
     public float getGameTime() { return gameTime + (((float)(endTime - startTime)) / 1000f); }
+
+    @Override
+    public void play(int i) {
+        Log.d("muzika", "lallala "+i);
+        services=new Intent(this, MyService.class);
+        services.putExtra("naziv", i);
+        services.setAction(MyService.ACTION_PLAY);
+        startService(services);
+    }
 }

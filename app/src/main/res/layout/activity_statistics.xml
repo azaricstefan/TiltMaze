@@ -13,7 +13,8 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="36sp" />
 
     <ListView
         android:id="@+id/statisticsListView"

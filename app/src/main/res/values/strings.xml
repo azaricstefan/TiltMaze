@@ -82,4 +82,5 @@
     <string name="traction_title">Traction</string>
     <string name="wall_hit_summary">How much percentage ball loses when hits wall</string>
     <string name="wall_hit_title">Wall hit defect</string>
+    <string name="choose_polygon">Choose polygon</string>
 </resources>

@@ -59,6 +59,7 @@ public class StatisticsActivity extends Activity
             myCursorAdapter = new SingleStatsCursorAdapter(this,dbOperationsHelper.getSingleStatistic(nameOfTrack));
             listView.setAdapter(myCursorAdapter);
         }else {
+
             //ovde ide obrada svih podataka o svim statistikama
             addTracksToList();
         }

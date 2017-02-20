@@ -110,7 +110,7 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
                 imageView.getEndPoint().setX(event.getX() / polygon.getHeight());
                 imageView.getEndPoint().setY(event.getY() / polygon.getHeight());
                 if(polygon.checkedEndPoint(imageView.getEndPoint())) {
-                    polygon.setEndPoint(imageView.getEndPoint());
+                    polygon.setGoal(imageView.getEndPoint());
                     ((MenuItem)menu.findItem(R.id.add_end_point)).setEnabled(false);
                     ((MenuItem)menu.findItem(R.id.add_wall)).setChecked(true);
                     option=Option.WALL;
@@ -144,7 +144,7 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
                 imageView.getStartPoint().setX(event.getX() / polygon.getHeight());
                 imageView.getStartPoint().setY(event.getY() / polygon.getHeight());
                 if(polygon.checkedStartPoint(imageView.getStartPoint())) {
-                    polygon.setStartPoint(imageView.getStartPoint());
+                    polygon.setBall(imageView.getStartPoint());
                     ((MenuItem)menu.findItem(R.id.add_start_point)).setEnabled(false);
                     ((MenuItem)menu.findItem(R.id.add_wall)).setChecked(true);
                     option=Option.WALL;
@@ -215,12 +215,12 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
             case R.id.add_end_point:
                 option=Option.END_POINT;
                 return true;
-            case R.id.move:
-                option=Option.MOVE;
-                return true;
-            case R.id.delete:
-                option=Option.DELETE;
-                return true;
+//            case R.id.move:
+//                option=Option.MOVE;
+//                return true;
+//            case R.id.delete:
+//                option=Option.DELETE;
+//                return true;
             case R.id.undo:
                 undo();
                 return true;

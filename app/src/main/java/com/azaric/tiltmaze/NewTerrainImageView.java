@@ -82,11 +82,11 @@ public class NewTerrainImageView extends ImageView {
         {
             canvas.drawCircle((float) h.getX() * width, (float) h.getY() * height, (float) model.getR() * height, paintOrange);
         }
-        if(model.getEndPoint()!=null)
-            canvas.drawCircle((float)model.getEndPoint().getX()*width, (float)model.getEndPoint().getY()*height,
+        if(model.getGoal()!=null)
+            canvas.drawCircle((float)model.getGoal().getX()*width, (float)model.getGoal().getY()*height,
                     (float)model.getR()*height,paintGreen);
-        if(model.getStartPoint()!=null)
-            canvas.drawCircle((float)model.getStartPoint().getX()*width, (float)model.getStartPoint().getY()*height,
+        if(model.getBall()!=null)
+            canvas.drawCircle((float)model.getBall().getX()*width, (float)model.getBall().getY()*height,
                     (float)model.getrBall()*height,paintWhite);
 
 

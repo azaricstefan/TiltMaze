@@ -20,115 +20,127 @@ public class Polygon {
     private Controller.MyPlayer myPlayer;
     private double height;
     private double width;
-    private Vector<Wall> walls=new Vector<>();
-    private Vector<Point> holes =new Vector<>();
-    private Point startPoint;
-    private Point endPoint;
-    private double r=0.05;
-    private double rBall=0.04;
-    static double w=0.02;
+    private Vector<Wall> walls = new Vector<>();
+    private Vector<Point> holes = new Vector<>();
+    private Point ball;
+    private Point goal;
+    private double r = 0.05;
+    private double rBall = 0.04;
+    static double w = 0.02;
     private boolean finish;
     private boolean win;
 
     private final Context context;
 
-    public Polygon(Controller.MyPlayer myPlayer, Context context) { this.myPlayer=myPlayer; this.context = context; }
-    public void  makePolygon(double height, double width) {
-        this.height=height;
-        this.width=width;
-        walls.add(new Wall(width/height-w,0, width/height, 1));
-        walls.add(new Wall(0,0, w, 1));
-        walls.add(new Wall(0,1-w, width/height, 1));
-        walls.add(new Wall(0,0, width/height, w));
+    public Polygon(Controller.MyPlayer myPlayer, Context context) {
+        this.myPlayer = myPlayer;
+        this.context = context;
     }
-    boolean checkedIntersection(Wall w, Point p, double r){
-        if (w.getxS()<p.getX() && w.getxE()>p.getX() && w.getyS()-r<p.getY() && w.getyE()+r>p.getY())
+
+    public void makePolygon(double height, double width) {
+        this.height = height;
+        this.width = width;
+        walls.add(new Wall(width / height - w, 0, width / height, 1));
+        walls.add(new Wall(0, 0, w, 1));
+        walls.add(new Wall(0, 1 - w, width / height, 1));
+        walls.add(new Wall(0, 0, width / height, w));
+    }
+
+    boolean checkedIntersection(Wall wall, Point point, double r) {
+        if (wall.getxS() < point.getX() &&
+                wall.getxE() > point.getX() &&
+                wall.getyS() - r < point.getY() &&
+                wall.getyE() + r > point.getY())
             return true;
-        if (w.getxS()-r<p.getX() && w.getxE()+r>p.getX() && w.getyS()<p.getY() && w.getyE()>p.getY())
+        if (wall.getxS() - r < point.getX() &&
+                wall.getxE() + r > point.getX() &&
+                wall.getyS() < point.getY() &&
+                wall.getyE() > point.getY())
             return true;
-        if(dist(p,new Point(w.getxE(),w.getyE()))<r)
+        if (dist(point, new Point(wall.getxE(), wall.getyE())) < r)
             return true;
-        if(dist(p,new Point(w.getxE(),w.getyS()))<r)
+        if (dist(point, new Point(wall.getxE(), wall.getyS())) < r)
             return true;
-        if(dist(p,new Point(w.getxS(),w.getyE()))<r)
+        if (dist(point, new Point(wall.getxS(), wall.getyE())) < r)
             return true;
-        if(dist(p,new Point(w.getxS(),w.getyS()))<r)
+        if (dist(point, new Point(wall.getxS(), wall.getyS())) < r)
             return true;
         return false;
     }
 
     public boolean checkedWall(Wall w) {
-        Wall wall=new Wall(Math.min(w.getxS(),w.getxE()),Math.min(w.getyS(),w.getyE()),
-                Math.max(w.getxS(), w.getxE()),Math.max(w.getyS(), w.getyE()));
-        for(Point h:holes)
-            if(checkedIntersection(wall,h,r))
+        Wall wall = new Wall(Math.min(w.getxS(), w.getxE()), Math.min(w.getyS(), w.getyE()),
+                Math.max(w.getxS(), w.getxE()), Math.max(w.getyS(), w.getyE()));
+        for (Point h : holes)
+            if (checkedIntersection(wall, h, r))
                 return false;
-        if(endPoint!=null && checkedIntersection(wall,endPoint,r))
+        if (goal != null && checkedIntersection(wall, goal, r))
             return false;
-        if(startPoint!=null && checkedIntersection(wall,startPoint,rBall))
-            return false;
-        return true;
-    }
-    public boolean checkedStartPoint(Point point) {
-        for(Wall wall:walls)
-            if(checkedIntersection(wall,point,rBall))
-                return false;
-        for(Point h:holes)
-            if(dist(h,point)<rBall+r)
-                return false;
-        if(endPoint!=null && dist(endPoint,point)<rBall+r)
-            return false;
-        return true;
-    }
-    public boolean checkedEndPoint(Point point) {
-        for(Wall wall:walls)
-            if(checkedIntersection(wall,point,r))
-                return false;
-        for(Point h:holes)
-            if(dist(h,point)<r+r)
-                return false;
-        if(startPoint!=null && dist(startPoint,point)<rBall+r)
-            return false;
-        return true;
-    }
-    public boolean checkedHole(Point point) {
-        for(Wall wall:walls)
-            if(checkedIntersection(wall,point,r))
-                return false;
-        for(Point h:holes)
-            if(dist(h,point)<r+r)
-                return false;
-        if(endPoint!=null && dist(endPoint,point)<r+r)
-            return false;
-        if(startPoint!=null && dist(startPoint,point)<rBall+r)
+        if (ball != null && checkedIntersection(wall, ball, rBall))
             return false;
         return true;
     }
 
-    public void addWall(Wall w)
-    {
+    public boolean checkedStartPoint(Point point) {
+        for (Wall wall : walls)
+            if (checkedIntersection(wall, point, rBall))
+                return false;
+        for (Point h : holes)
+            if (dist(h, point) < rBall + r)
+                return false;
+        if (goal != null && dist(goal, point) < rBall + r)
+            return false;
+        return true;
+    }
+
+    public boolean checkedEndPoint(Point point) {
+        for (Wall wall : walls)
+            if (checkedIntersection(wall, point, r))
+                return false;
+        for (Point h : holes)
+            if (dist(h, point) < r + r)
+                return false;
+        if (ball != null && dist(ball, point) < rBall + r)
+            return false;
+        return true;
+    }
+
+    public boolean checkedHole(Point point) {
+        for (Wall wall : walls)
+            if (checkedIntersection(wall, point, r))
+                return false;
+        for (Point h : holes)
+            if (dist(h, point) < r + r)
+                return false;
+        if (goal != null && dist(goal, point) < r + r)
+            return false;
+        if (ball != null && dist(ball, point) < rBall + r)
+            return false;
+        return true;
+    }
+
+    public void addWall(Wall w) {
         walls.add(w);
     }
 
-    public void addHole(Point h)
-    {
+    public void addHole(Point h) {
         holes.add(h);
     }
 
-    public Point getEndPoint() {
-        return endPoint;
+    public Point getGoal() {
+        return goal;
     }
 
-    public void setEndPoint(Point endPoint) {
-        this.endPoint = endPoint;
+    public void setGoal(Point goal) {
+        this.goal = goal;
     }
 
-    public Point getStartPoint() {
-        return startPoint;
+    public Point getBall() {
+        return ball;
     }
 
-    public void setStartPoint(Point startPoint) {
-        this.startPoint = startPoint;
+    public void setBall(Point ball) {
+        this.ball = ball;
     }
 
     public Vector<Point> getHoles() {
@@ -180,18 +192,17 @@ public class Polygon {
     }
 
     public void savePolygon(String name, Context context) {
-        double scaleW=(width/height);
-        height=1;
-        width=1;
-        for(Wall wall:walls)
-        {
-            wall.setxE(wall.getxE()/scaleW);
+        double scaleW = (width / height);
+        height = 1;
+        width = 1;
+        for (Wall wall : walls) {
+            wall.setxE(wall.getxE() / scaleW);
             wall.setxS(wall.getxS() / scaleW);
         }
-        for(Point p:holes)
-            p.setX(p.getX()/scaleW);
-        endPoint.setX(endPoint.getX()/scaleW);
-        startPoint.setX(startPoint.getX()/scaleW);
+        for (Point p : holes)
+            p.setX(p.getX() / scaleW);
+        goal.setX(goal.getX() / scaleW);
+        ball.setX(ball.getX() / scaleW);
 
         File file = new File(context.getExternalFilesDir(null), name);
         FileWriter writer = null;
@@ -199,32 +210,36 @@ public class Polygon {
             writer = new FileWriter(file);
 
             //START POINT
-            double x = startPoint.getX();
-            double y = startPoint.getY();
-            String stringStartPoint = x + ":" + y +"\n";
+            double x = ball.getX();
+            double y = ball.getY();
+            String stringStartPoint = x + ":" + y + "\n";
             writer.append(stringStartPoint);
 
             //END POINT
-            x = endPoint.getX(); y = endPoint.getY();
-            String stringEndPoint = x + ":" + y +"\n";
+            x = goal.getX();
+            y = goal.getY();
+            String stringEndPoint = x + ":" + y + "\n";
             writer.append(stringEndPoint);
 
             //HOLE
-            String sizeOfHoles = ""+holes.size()+"\n";
+            String sizeOfHoles = "" + holes.size() + "\n";
             writer.append(sizeOfHoles);
-            for(Point p : holes){
-                x = p.getX(); y = p.getY();
-                String stringHole = x + ":" + y +"\n";
+            for (Point p : holes) {
+                x = p.getX();
+                y = p.getY();
+                String stringHole = x + ":" + y + "\n";
                 writer.append(stringHole);
             }
 
             //WALL
-            String sizeOfWalls = ""+walls.size()+"\n";
+            String sizeOfWalls = "" + walls.size() + "\n";
             writer.append(sizeOfWalls);
-            for(Wall w : walls){
-                double xS = w.getxS(); double xE = w.getxE();
-                double yS = w.getyS(); double yE = w.getyE();
-                String stringWall = xS + ":" + xE + ":" + yS + ":" + yE  +"\n";
+            for (Wall w : walls) {
+                double xS = w.getxS();
+                double xE = w.getxE();
+                double yS = w.getyS();
+                double yE = w.getyE();
+                String stringWall = xS + ":" + xE + ":" + yS + ":" + yE + "\n";
                 writer.append(stringWall); //WALL
             }
 
@@ -236,40 +251,40 @@ public class Polygon {
     }
 
     public void loadPolygonFromFile(String name, Context context) {
-        width=height=1;
+        width = height = 1;
         File file = new File(context.getExternalFilesDir(null), name);
         FileReader reader = null;
-        try{
+        try {
             reader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(reader);
 
             //START POINT READ
             String startPoint = bufferedReader.readLine();
             String[] startPointArray = startPoint.split(":");
-            this.startPoint = new Point();
-            this.startPoint.setX(Double.parseDouble(startPointArray[0]));
-            this.startPoint.setY(Double.parseDouble(startPointArray[1]));
+            this.ball = new Point();
+            this.ball.setX(Double.parseDouble(startPointArray[0]));
+            this.ball.setY(Double.parseDouble(startPointArray[1]));
 
             //END POINT READ
             String endPoint = bufferedReader.readLine();
             String[] endPointArray = endPoint.split(":");
-            this.endPoint = new Point();
-            this.endPoint.setX(Double.parseDouble(endPointArray[0]));
-            this.endPoint.setY(Double.parseDouble(endPointArray[1]));
+            this.goal = new Point();
+            this.goal.setX(Double.parseDouble(endPointArray[0]));
+            this.goal.setY(Double.parseDouble(endPointArray[1]));
 
             //READ HOLES
             String sizeOfHolesString = bufferedReader.readLine();
             int sizeOfHoles = Integer.parseInt(sizeOfHolesString);
 
-            for(int i = 0; i < sizeOfHoles; i++) {
+            for (int i = 0; i < sizeOfHoles; i++) {
                 String hole = bufferedReader.readLine();
                 if (hole == null)
                     break;
                 String[] holeArray = hole.split(":");
-                Log.d("HOLE_ARRAY", "X: " + holeArray [0] + " Y: " + holeArray [1]);
-                String loadedX = holeArray [0];
-                String loadedY = holeArray [1];
-                Point h = new Point(Double.parseDouble(loadedX),Double.parseDouble(loadedY));
+                Log.d("HOLE_ARRAY", "X: " + holeArray[0] + " Y: " + holeArray[1]);
+                String loadedX = holeArray[0];
+                String loadedY = holeArray[1];
+                Point h = new Point(Double.parseDouble(loadedX), Double.parseDouble(loadedY));
                 holes.add(h);
             }
 
@@ -277,7 +292,7 @@ public class Polygon {
             String sizeOfWallsString = bufferedReader.readLine();
             int sizeOfWalls = Integer.parseInt(sizeOfWallsString);
 
-            for(int i = 0; i < sizeOfWalls; i++) {
+            for (int i = 0; i < sizeOfWalls; i++) {
                 String wall = bufferedReader.readLine();
                 if (wall == null)
                     break;
@@ -292,13 +307,13 @@ public class Polygon {
                 String loadedYend = wallArray[3];
 
                 Wall w = new Wall(
-                        Double.parseDouble(loadedXstart),Double.parseDouble(loadedYstart),
+                        Double.parseDouble(loadedXstart), Double.parseDouble(loadedYstart),
                         Double.parseDouble(loadedXend), Double.parseDouble(loadedYend));
                 walls.add(w);
             }
 
 
-        } catch (NumberFormatException nfe){
+        } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
         } catch (FileNotFoundException fne) {
             fne.printStackTrace();
@@ -308,217 +323,199 @@ public class Polygon {
     }
 
     public void loadPolygon(String name, Context context) {
-        width=height=1;
+        width = height = 1;
 
-        endPoint=new Point(0.8, 0.8);
-        startPoint=new Point(0.5, 0.5);
-        for(int i=1; i<5; i++)
-            holes.add(new Point(i*0.2,1-i*0.2));
-        walls.add(new Wall(1-w,0, 1, 1));
-        walls.add(new Wall(0,0, w, 1));
-        walls.add(new Wall(0,1-w, 1, 1));
-        walls.add(new Wall(0,0, 1, w));
+        goal = new Point(0.8, 0.8);
+        ball = new Point(0.5, 0.5);
+        for (int i = 1; i < 5; i++)
+            holes.add(new Point(i * 0.2, 1 - i * 0.2));
+        walls.add(new Wall(1 - w, 0, 1, 1));
+        walls.add(new Wall(0, 0, w, 1));
+        walls.add(new Wall(0, 1 - w, 1, 1));
+        walls.add(new Wall(0, 0, 1, w));
     }
 
 
     double velocityX = 0, velocityY = 0;
 
-    private  double traction=0.2;
-    private  double collision=0.7;
+    private double traction = 0.2;
+    private double collision = 0.7;
     private double accTimeFactor = 1000000;
-    private double g=9.81;
+    private double g = 9.81;
+
     public void setVelocity(float y, float x, long delta) {
         //get data from settings
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         traction = Double.parseDouble(sharedPreferences.getString(context.getString(R.string.preference_traction_key), "0.2"));
         collision = Double.parseDouble(sharedPreferences.getString(context.getString(R.string.preference_collision), "0.7"));
+        g = Double.parseDouble(sharedPreferences.getString(context.getString(R.string.gravity), "9.81"));
 
-        velocityX = velocityX+ x * delta /width/accTimeFactor/g/g;
-        velocityY = velocityY+ y * delta / height/accTimeFactor/g/g;
+        velocityX = velocityX + x * delta / width / accTimeFactor / g / g;
+        velocityY = velocityY + y * delta / height / accTimeFactor / g / g;
 
-        velocityX*=1-traction;
-        velocityY*=1-traction;
+        velocityX *= 1 - traction;
+        velocityY *= 1 - traction;
         //Log.d("BRZINA", "x: " + x + "y: " + y + " delta: " + delta);
         //Log.d("BRZINA", "vX: " + velocityX + " x: " + velocityY);
-        Point lastPoint=new Point(startPoint.getX(),startPoint.getY());
-        startPoint.setX(startPoint.getX() + velocityX * delta / accTimeFactor);
-        startPoint.setY(startPoint.getY() + velocityY * delta/ accTimeFactor);
+        Point lastPoint = new Point(ball.getX(), ball.getY());
+        ball.setX(ball.getX() + velocityX * delta / accTimeFactor);
+        ball.setY(ball.getY() + velocityY * delta / accTimeFactor);
 
-        for(Point h:holes)
-        {
-            Point nh=pointToLineDistance(lastPoint,startPoint,h);
-            double cr=dist(nh,h);
-            if(cr<r*0.9)
-            {
+        for (Point h : holes) {
+            Point nh = pointToLineDistance(lastPoint, ball, h);
+            double cr = dist(nh, h);
+            if (cr < r * 0.9) {
 
-                if(cr+rBall>r) {
+                if (cr + rBall > r) {
                     nh.setX(h.getX() + (nh.getX() - h.getX()) * (r - rBall) / cr);
                     nh.setY(h.getY() + (nh.getY() - h.getY()) * (r - rBall) / cr);
                 }
-                startPoint=nh;
-                Log.d("kraj", "kraja");
-                finish=true;
-                win=false;
+                ball = nh;
+                Log.d("kraj", "kraj igre");
+                finish = true;
+                win = false;
                 myPlayer.play(2);
                 //
                 return;
             }
 
         }
-        Point nh=pointToLineDistance(lastPoint,startPoint,endPoint);
-        double cr=dist(nh,endPoint);
-        if(cr<r)
-        {
-            if(cr+rBall>r) {
-                nh.setX(endPoint.getX() + (nh.getX() - endPoint.getX()) * (r - rBall) / cr);
-                nh.setY(endPoint.getY() + (nh.getY() - endPoint.getY()) * (r - rBall) / cr);
+        Point nh = pointToLineDistance(lastPoint, ball, goal);
+        double cr = dist(nh, goal);
+        if (cr < r) {
+            if (cr + rBall > r) {
+                nh.setX(goal.getX() + (nh.getX() - goal.getX()) * (r - rBall) / cr);
+                nh.setY(goal.getY() + (nh.getY() - goal.getY()) * (r - rBall) / cr);
             }
-            startPoint=nh;
-            finish=true;
-            win=true;
+            ball = nh;
+            finish = true;
+            win = true;
             myPlayer.play(1);
             //dialog
             return;
         }
-        Log.d("loptica","noviKrug");
-        for(Wall w:walls)
-        {
-            if(w.getxS()-rBall+0.001>lastPoint.getX() && w.getxS()-rBall-0.001<startPoint.getX())
-            {
-                double yy=lastPoint.getY()+(startPoint.getY()-lastPoint.getY())*(w.getxS()-rBall-lastPoint.getX())/(startPoint.getX()-lastPoint.getX());
-                if(yy>w.getyS()-rBall && yy<w.getyE()+rBall)
-                {
-                    startPoint.setX(startPoint.getX()-2*(startPoint.getX()-w.getxS()+rBall));
-                    if(startPoint.getX()<w.getxS()-rBall-0.001)
-                        startPoint.setX(w.getxS()-rBall-0.001);
-                    velocityX=-velocityX*collision;
-                    velocityY*=collision;
+        Log.d("loptica", "noviKrug");
+        for (Wall w : walls) {
+            if (w.getxS() - rBall + 0.001 > lastPoint.getX() && w.getxS() - rBall - 0.001 < ball.getX()) {
+                double yy = lastPoint.getY() + (ball.getY() - lastPoint.getY()) * (w.getxS() - rBall - lastPoint.getX()) / (ball.getX() - lastPoint.getX());
+                if (yy > w.getyS() - rBall && yy < w.getyE() + rBall) {
+                    ball.setX(ball.getX() - 2 * (ball.getX() - w.getxS() + rBall));
+                    if (ball.getX() < w.getxS() - rBall - 0.001)
+                        ball.setX(w.getxS() - rBall - 0.001);
+                    velocityX = -velocityX * collision;
+                    velocityY *= collision;
                     myPlayer.play(0);
-                    Log.d("loptica","xS");
+                    Log.d("loptica", "xS");
                 }
             }
-            if(w.getxE()+rBall-0.001<lastPoint.getX() && w.getxE()+rBall+0.001>startPoint.getX())
-            {
-                double yy=lastPoint.getY()+(startPoint.getY()-lastPoint.getY())*(w.getxE()+rBall-lastPoint.getX())/(startPoint.getX()-lastPoint.getX());
-                if(yy>w.getyS()-rBall && yy<w.getyE()+rBall)
-                {
-                    startPoint.setX(startPoint.getX() - 2 * (startPoint.getX() - w.getxE() - rBall));
-                    velocityX=-velocityX*collision;
-                    if(startPoint.getX()<w.getxE()+rBall+0.001)
-                        startPoint.setX(w.getxE()+rBall+0.001);
-                    velocityY*=collision;
+            if (w.getxE() + rBall - 0.001 < lastPoint.getX() && w.getxE() + rBall + 0.001 > ball.getX()) {
+                double yy = lastPoint.getY() + (ball.getY() - lastPoint.getY()) * (w.getxE() + rBall - lastPoint.getX()) / (ball.getX() - lastPoint.getX());
+                if (yy > w.getyS() - rBall && yy < w.getyE() + rBall) {
+                    ball.setX(ball.getX() - 2 * (ball.getX() - w.getxE() - rBall));
+                    velocityX = -velocityX * collision;
+                    if (ball.getX() < w.getxE() + rBall + 0.001)
+                        ball.setX(w.getxE() + rBall + 0.001);
+                    velocityY *= collision;
                     myPlayer.play(0);
-                    Log.d("loptica","xE");
+                    Log.d("loptica", "xE");
                 }
             }
-            if(w.getyS()-rBall+0.001>lastPoint.getY() && w.getyS()-rBall-0.001<startPoint.getY())
-            {
-                double xx=lastPoint.getX()+(startPoint.getX()-lastPoint.getX())*(w.getyS()-rBall-lastPoint.getY())/(startPoint.getY()-lastPoint.getY());
-                if(xx>w.getxS()-rBall && xx<w.getxE()+rBall)
-                {
-                    startPoint.setY(startPoint.getY() - 2 * (startPoint.getY() - w.getyS() + rBall));
-                    if(startPoint.getY()>w.getyS()-rBall-0.001)
-                        startPoint.setY(w.getyS()-rBall-0.001);
-                    velocityY=-velocityY*collision;
-                    velocityX*=collision;
+            if (w.getyS() - rBall + 0.001 > lastPoint.getY() && w.getyS() - rBall - 0.001 < ball.getY()) {
+                double xx = lastPoint.getX() + (ball.getX() - lastPoint.getX()) * (w.getyS() - rBall - lastPoint.getY()) / (ball.getY() - lastPoint.getY());
+                if (xx > w.getxS() - rBall && xx < w.getxE() + rBall) {
+                    ball.setY(ball.getY() - 2 * (ball.getY() - w.getyS() + rBall));
+                    if (ball.getY() > w.getyS() - rBall - 0.001)
+                        ball.setY(w.getyS() - rBall - 0.001);
+                    velocityY = -velocityY * collision;
+                    velocityX *= collision;
                     myPlayer.play(0);
-                    Log.d("loptica","yS");
+                    Log.d("loptica", "yS");
                 }
             }
-            if(w.getyE()+rBall-0.001<lastPoint.getY() && w.getyE()+rBall+0.001>startPoint.getY())
-            {
-                double xx=lastPoint.getX()+(startPoint.getX()-lastPoint.getX())*(w.getyS()+rBall-lastPoint.getY())/(startPoint.getY()-lastPoint.getY());
-                if (xx > w.getxS()-rBall && xx < w.getxE()+rBall) {
-                    startPoint.setY(startPoint.getY()-2*(startPoint.getY()-w.getyE()-rBall));
-                    if(startPoint.getY()<w.getyE()+rBall+0.001)
-                        startPoint.setY(w.getyE()+rBall+0.001);
-                    velocityY=-velocityY*collision;
-                    velocityX*=collision;
+            if (w.getyE() + rBall - 0.001 < lastPoint.getY() && w.getyE() + rBall + 0.001 > ball.getY()) {
+                double xx = lastPoint.getX() + (ball.getX() - lastPoint.getX()) * (w.getyS() + rBall - lastPoint.getY()) / (ball.getY() - lastPoint.getY());
+                if (xx > w.getxS() - rBall && xx < w.getxE() + rBall) {
+                    ball.setY(ball.getY() - 2 * (ball.getY() - w.getyE() - rBall));
+                    if (ball.getY() < w.getyE() + rBall + 0.001)
+                        ball.setY(w.getyE() + rBall + 0.001);
+                    velocityY = -velocityY * collision;
+                    velocityX *= collision;
                     myPlayer.play(0);
-                    Log.d("loptica","yE");
+                    Log.d("loptica", "yE");
                 }
             }
         }
-        for(Wall wall:walls)
-            if(checkedIntersection(wall,startPoint,rBall))
-            {
-                startPoint=lastPoint;
-                Log.d("loptica","reset");
+        for (Wall wall : walls)
+            if (checkedIntersection(wall, ball, rBall)) {
+                ball = lastPoint;
+                Log.d("loptica", "reset");
             }
     }
 
     public double dist(Point A, Point B) {
-        return Math.sqrt((A.getX()-B.getX())*(A.getX()-B.getX())+(A.getY()-B.getY())*(A.getY()-B.getY()));
+        return Math.sqrt((A.getX() - B.getX()) * (A.getX() - B.getX()) + (A.getY() - B.getY()) * (A.getY() - B.getY()));
     }
 
     public Point pointToLineDistance(Point A, Point B, Point P) {
-        Point v=new Point(B.getX() - A.getX(), B.getY() - A.getY());
-        Point w=new Point(P.getX() - A.getX(), P.getY() - A.getY());
+        Point v = new Point(B.getX() - A.getX(), B.getY() - A.getY());
+        Point w = new Point(P.getX() - A.getX(), P.getY() - A.getY());
 
-        double c1 =  w.getX() * v.getX() + w.getY() * v.getY();
+        double c1 = w.getX() * v.getX() + w.getY() * v.getY();
         double c2 = v.getX() * v.getX() + v.getY() * v.getY();
         double b = c1 / c2;
 
-        Point Pb = new Point(A.getX()+ b * v.getX(),A.getX()+ b * v.getX());
-        if(Pb.getX()>A.getX() && Pb.getX()>B.getX())
-        {
-            if(A.getX()>B.getX())
-                Pb=A;
+        Point Pb = new Point(A.getX() + b * v.getX(), A.getX() + b * v.getX());
+        if (Pb.getX() > A.getX() && Pb.getX() > B.getX()) {
+            if (A.getX() > B.getX())
+                Pb = A;
             else
-                Pb=B;
-        }
-        else if(Pb.getX()<A.getX() && Pb.getX()<B.getX()) {
+                Pb = B;
+        } else if (Pb.getX() < A.getX() && Pb.getX() < B.getX()) {
             if (A.getX() < B.getX())
                 Pb = A;
             else
                 Pb = B;
-        } else if(Pb.getY()>A.getY() && Pb.getY()>B.getY())
-        {
-            if(A.getY()>B.getY())
-                Pb=A;
+        } else if (Pb.getY() > A.getY() && Pb.getY() > B.getY()) {
+            if (A.getY() > B.getY())
+                Pb = A;
             else
-                Pb=B;
-        }
-        else if(Pb.getY()<A.getY() && Pb.getY()<B.getY())
-        {
-            if(A.getY()<B.getY())
-                Pb=A;
+                Pb = B;
+        } else if (Pb.getY() < A.getY() && Pb.getY() < B.getY()) {
+            if (A.getY() < B.getY())
+                Pb = A;
             else
-                Pb=B;
+                Pb = B;
         }
         return Pb;
     }
 
     public void setSize(double h, double w) {
-        double scaleW=(w/h)/(width/height);
-        height=h;
-        width=w;
-        for(Wall wall:walls)
-        {
-            wall.setxE(wall.getxE()*scaleW);
+        double scaleW = (w / h) / (width / height);
+        height = h;
+        width = w;
+        for (Wall wall : walls) {
+            wall.setxE(wall.getxE() * scaleW);
             wall.setxS(wall.getxS() * scaleW);
         }
-        for(Point p:holes)
-            p.setX(p.getX()*scaleW);
-        endPoint.setX(endPoint.getX()*scaleW);
-        startPoint.setX(startPoint.getX()*scaleW);
+        for (Point p : holes)
+            p.setX(p.getX() * scaleW);
+        goal.setX(goal.getX() * scaleW);
+        ball.setX(ball.getX() * scaleW);
     }
 
-    void removeLast(char c)
-    {
-        switch (c)
-        {
+    void removeLast(char c) {
+        switch (c) {
             case 'w':
-                walls.remove(walls.size()-1);
+                walls.remove(walls.size() - 1);
                 break;
             case 'e':
-                endPoint=null;
+                goal = null;
                 break;
             case 's':
-                startPoint=null;
+                ball = null;
                 break;
             case 'h':
-                holes.remove(holes.size()-1);
+                holes.remove(holes.size() - 1);
                 break;
         }
     }
@@ -526,7 +523,8 @@ public class Polygon {
     public boolean isGameOver() {
         return finish;
     }
-    public boolean isWin(){
+
+    public boolean isWin() {
         return win;
     }
 }

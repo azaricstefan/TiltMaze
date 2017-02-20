@@ -9,6 +9,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class GameActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         startTime = System.currentTimeMillis();
 
@@ -98,14 +100,14 @@ public class GameActivity extends Activity
                 endTime = System.currentTimeMillis();
                 score = getGameTime();
                 Toast t;
-                t = Toast.makeText(this,"Pobedili ste",Toast.LENGTH_SHORT);
+                t = Toast.makeText(this, R.string.game_won,Toast.LENGTH_SHORT);
                 t.show();
                 //otvori dialog
                 DialogFragment nameDialog = new GameNameDialog();
                 nameDialog.show(getFragmentManager(), "nameDialog");
             } else {
                 Toast t;
-                t = Toast.makeText(this,"Izgubili ste",Toast.LENGTH_SHORT);
+                t = Toast.makeText(this, R.string.game_lost,Toast.LENGTH_SHORT);
                 t.show();
                 finish();
             }

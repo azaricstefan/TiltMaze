@@ -4,10 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.widget.ImageView;
 
 /**
@@ -19,10 +16,10 @@ public class MyImageView extends ImageView{
     Controller controller;
     Polygon model;
     Paint paintRed=new Paint();
-    Paint paintOrange=new Paint();
+    Paint paintMagenta =new Paint();
     Paint paintGreen=new Paint();
     Paint paintWhite=new Paint();
-    Paint paintGray=new Paint();
+    Paint paintBlack =new Paint();
 
 
     Paint paint=new Paint();
@@ -57,27 +54,28 @@ public class MyImageView extends ImageView{
         //Log.d("draw", "draw");
         paintRed.setColor(Color.RED);
         paintGreen.setColor(Color.GREEN);
-        paintWhite.setColor(Color.YELLOW);
-        paintOrange.setColor(Color.MAGENTA);
-        paintGray.setColor(Color.BLACK);
+        paintWhite.setColor(Color.WHITE);
+        paintMagenta.setColor(Color.MAGENTA);
+        paintBlack.setColor(Color.BLACK);
 
-        float width=(float)model.getWidth();
-        float height=(float)model.getHeight();
+        if (model != null) {
+            float width = (float) model.getWidth();
+            float height = (float) model.getHeight();
 
-        for (Wall wall : model.getWalls())
-            canvas.drawRect((float) wall.getxS() * height, (float) wall.getyS() * height,
-                    (float) wall.getxE() * height, (float) wall.getyE() * height, paintGray);
+            for (Wall wall : model.getWalls())
+                canvas.drawRect((float) wall.getxS() * height, (float) wall.getyS() * height,
+                        (float) wall.getxE() * height, (float) wall.getyE() * height, paintBlack);
 
-        for(Point h:model.getHoles())
-        {
-            canvas.drawCircle((float) h.getX() * height, (float) h.getY() * height, (float) model.getR() * height, paintOrange);
+            for (Point h : model.getHoles()) {
+                canvas.drawCircle((float) h.getX() * height, (float) h.getY() * height, (float) model.getR() * height, paintRed);
+            }
+            if (model.getGoal() != null)
+                canvas.drawCircle((float) model.getGoal().getX() * height, (float) model.getGoal().getY() * height,
+                        (float) model.getR() * height, paintGreen);
+            if (model.getBall() != null)
+                canvas.drawCircle((float) model.getBall().getX() * height, (float) model.getBall().getY() * height,
+                        (float) model.getrBall() * height, paintWhite);
         }
-        if(model.getEndPoint()!=null)
-            canvas.drawCircle((float)model.getEndPoint().getX()*height, (float)model.getEndPoint().getY()*height,
-                    (float)model.getR()*height,paintGreen);
-        if(model.getStartPoint()!=null)
-            canvas.drawCircle((float)model.getStartPoint().getX()*height, (float)model.getStartPoint().getY()*height,
-                    (float)model.getrBall()*height,paintWhite);
     }
 
 

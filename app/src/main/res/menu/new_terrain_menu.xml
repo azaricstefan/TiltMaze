@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
-        <item android:title="Add wall" android:id="@+id/add_wall" android:checked="true"/>
-        <item android:title="Add hole" android:id="@+id/add_hole"/>
-        <item android:title="Add start point" android:id="@+id/add_start_point" />
-        <item android:title="Add end point" android:id="@+id/add_end_point" />
-        <item android:title="Move" android:id="@+id/move" />
-        <item android:title="Delete" android:id="@+id/delete"/>
+        <item
+            android:checkable="false"
+            android:title="@string/Elements">
+            <menu>
+                <item
+                    android:id="@+id/add_wall"
+                    android:checked="true"
+                    android:title="@string/add_wall" />
+                <item
+                    android:id="@+id/add_hole"
+                    android:title="@string/add_hole" />
+                <item
+                    android:id="@+id/add_start_point"
+                    android:title="@string/add_start_point" />
+                <item
+                    android:id="@+id/add_end_point"
+                    android:title="@string/add_end_point" />
+                <!--<item android:title="Move" android:id="@+id/move" />-->
+                <!--<item android:title="Delete" android:id="@+id/delete"/>-->
+            </menu>
+        </item>
     </group>
-    <item android:title="Undo" android:id="@+id/undo" android:enabled="false"/>
-    <item android:title="Save" android:id="@+id/save" android:enabled="false"/>
+    <item
+        android:id="@+id/undo"
+        android:enabled="false"
+        android:title="@string/undo" />
+    <item
+        android:id="@+id/save"
+        android:enabled="false"
+        android:title="@string/save" />
 </menu>

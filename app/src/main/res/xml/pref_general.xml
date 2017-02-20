@@ -27,6 +27,14 @@
             android:key="@string/preference_traction_key"
             android:summary="@string/traction_summary"
             android:title="@string/traction_title" />
+
+        <EditTextPreference
+            android:defaultValue="9.81"
+            android:inputType="numberDecimal"
+
+            android:key="@string/gravity"
+            android:summary="@string/pref_gen_gravity_summary"
+            android:title="@string/pref_gen_gravity_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

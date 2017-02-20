@@ -195,6 +195,7 @@ public class SettingsActivity extends PreferenceActivity {
             bindPreferenceSummaryToValue(findPreference(this.getString(R.string.preference_traction_key)));
             bindPreferenceSummaryToValue(findPreference(this.getString(R.string.preference_collision)));
             bindPreferenceSummaryToValue(findPreference(this.getString(R.string.preference_player_name)));
+            bindPreferenceSummaryToValue(findPreference(this.getString(R.string.gravity)));
         }
 
         @Override

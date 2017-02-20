@@ -83,7 +83,7 @@ public class StatisticsActivity extends Activity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.delete_statistic_for_selected_polygon:
-                //TODO: DELETE STATISTICS FOR SELECTED POLYGON and return main activity
+                //DELETE STATISTICS FOR SELECTED POLYGON and return main activity
                 //SHOW DIALOG
                 DialogFragment resetSingleDialog = new StatisticsDialogResetSingle();
                 resetSingleDialog.show(getFragmentManager(), "resetSingleDialog");
@@ -137,9 +137,6 @@ public class StatisticsActivity extends Activity
         menu.findItem(R.id.delete_statistic_for_selected_polygon).setVisible(true);
         titleTextView.setText(String.format("%s%s", getString(R.string.stats_for_polygon), nameOfTrack));
         //OPEN STATS FOR POLYGON AND SHOW THEM
-        //TODO: TEST update StatisticsActivity with details about the polygon
-
-
     }
 
     public String getNameOfPolygon(){ return  nameOfTrack; }
@@ -157,7 +154,7 @@ public class StatisticsActivity extends Activity
             double resultt = cursor.getDouble(cursor.getColumnIndex(DBGame.GameEntry.COLUMN_SCORE_TIME));
             String result = String.format("%.2f", resultt);
             TextView textView = (TextView)view;
-            textView.setText("Player name: " + playerName + " Result(s): " + result );
+            textView.setText(cursor.getPosition()+1+". " + playerName + " -> " + result + "s" );
 
         }
 

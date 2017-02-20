@@ -14,12 +14,12 @@
     <string name="pref_title_add_friends_to_messages">Dodaj prijatelje u poruke</string>
     <string name="pref_title_display_name">Ime igrača</string>
     <string name="pref_title_new_message_notifications">Nova poruka notifikacije</string>
-    <string name="pref_title_ringtone"></string>
+    <string name="pref_title_ringtone">Ringtone</string>
     <string name="pref_title_social_recommendations">Radio dugme TODO</string>
     <string name="pref_title_sync_frequency">Sinhronizacija frekvencija</string>
     <string name="pref_title_system_sync_settings">Sistemska sinhronizacija podešavanja</string>
     <string name="pref_title_vibrate">Vibracija</string>
-    <string name="preference_collision"></string>
+    <string name="preference_collision">BUMP_KEY</string>
     <string name="settings">Podešavanja</string>
     <string name="show_statistics">Prikaži statistiku</string>
     <string name="statistics">Statistika</string>
@@ -49,4 +49,18 @@
     <string name="stats_dialog_delete_all_stats_title">Brisanje SVE statistike</string>
     <string name="stats_dialog_reset_single_msg">Da li zelite da obrisete statistiku?</string>
     <string name="stats_dialog_reset_single_title">Brisanje jedne statistike</string>
+    <string name="preference_traction_key">TRACTION_KEY</string>
+    <string name="preference_player_name">PLAYER_NAME</string>
+    <string name="gravity">gravity_key</string>
+    <string name="pref_gen_gravity_summary">Zemljina gravitacija</string>
+    <string name="pref_gen_gravity_title">Gravitacija</string>
+    <string name="game_won">Pobedili ste!</string>
+    <string name="game_lost">Izgubili ste.</string>
+    <string name="Elements">Elementi</string>
+    <string name="add_start_point">Dodaj početnu tačku za lopticu</string>
+    <string name="add_wall">Dodaj zid</string>
+    <string name="add_hole">Dodaj rupu</string>
+    <string name="add_end_point">Dodaj ciljnu rupu</string>
+    <string name="save">Sačuvaj</string>
+    <string name="undo">Vrati 1 element</string>
 </resources>

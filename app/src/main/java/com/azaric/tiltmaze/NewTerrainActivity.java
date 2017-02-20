@@ -9,11 +9,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.azaric.tiltmaze.Dialog.SaveDialog;
+import com.azaric.tiltmaze.Dialog.CreateTerrainDialog;
+import com.azaric.tiltmaze.Dialog.CreateTerrainSaveDialog;
 
-import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 public class NewTerrainActivity extends Activity implements View.OnTouchListener, Controller.MyPlayer {
     Polygon polygon;
@@ -252,8 +251,18 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
 
     public boolean save(){
         //prikazi dialog
-        DialogFragment saveDialog = new SaveDialog();
+        DialogFragment saveDialog = new CreateTerrainSaveDialog();
         saveDialog.show(getFragmentManager(), "saveDialog");
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        DialogFragment createTerrainDialog = new CreateTerrainDialog();
+        createTerrainDialog.show(getFragmentManager(), "createTerrainDialog");
+    }
+
+    public boolean isSavePossible() {
+        return menu.findItem(R.id.save).isEnabled();
     }
 }

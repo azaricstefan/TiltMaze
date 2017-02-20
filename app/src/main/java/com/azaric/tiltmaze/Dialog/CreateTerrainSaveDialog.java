@@ -20,7 +20,7 @@ import com.azaric.tiltmaze.StatisticsActivity;
  * Created in project with name: "Tiltmaze"
  */
 
-public class SaveDialog extends DialogFragment {
+public class CreateTerrainSaveDialog extends DialogFragment {
 
     EditText input;
 
@@ -36,8 +36,8 @@ public class SaveDialog extends DialogFragment {
         );
         input.setLayoutParams(lp);
 
-        builder.setMessage("Unesi ime crteža:")
-                .setTitle("Dialog za čuvanje crteža")
+        builder.setMessage("Unesi ime poligona:")
+                .setTitle("Dialog za čuvanje poligona")
                 .setView(input)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -50,7 +50,7 @@ public class SaveDialog extends DialogFragment {
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
-                        getActivity().finish();
+                        //getActivity().finish();
                     }
                 });
         // Create the AlertDialog object and return it

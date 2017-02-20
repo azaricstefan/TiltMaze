@@ -70,7 +70,7 @@ public class DbOperationsHelper {
             String selection = DBGame.GameEntry.COLUMN_POLYGON_NAME+ " = ?";
             String selectionArgs[] = {nameOfPolygon};
 
-            String orderBy = DBGame.GameEntry.COLUMN_SCORE_TIME + " DESC"; //TODO: TEST if order of statistic is good
+            String orderBy = DBGame.GameEntry.COLUMN_SCORE_TIME;
             cursor = db.query(
                     DBGame.GameEntry.TABLE_NAME,
                     columns,

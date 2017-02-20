@@ -153,7 +153,8 @@ public class StatisticsActivity extends Activity
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
             String playerName = cursor.getString(cursor.getColumnIndex(DBGame.GameEntry.COLUMN_PLAYER_NAME));
-            double result = cursor.getDouble(cursor.getColumnIndex(DBGame.GameEntry.COLUMN_SCORE_TIME));
+            double resultt = cursor.getDouble(cursor.getColumnIndex(DBGame.GameEntry.COLUMN_SCORE_TIME));
+            String result = String.format("%.2f", resultt);
             TextView textView = (TextView)view;
             textView.setText("Player name: " + playerName + " Result(s): " + result );
 

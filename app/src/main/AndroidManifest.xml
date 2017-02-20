@@ -30,7 +30,8 @@
                 android:value="com.azaric.tiltmaze.MainActivity" />
         </activity>
         <activity android:name=".GameActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
 
         </activity>
 

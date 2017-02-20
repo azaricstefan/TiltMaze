@@ -117,23 +117,6 @@ public class GameActivity extends Activity
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
 
-    @Override
-    public void onBackPressed() {/*
-        if(controller.nameOfDrawingToLoad!=null)
-        {
-            DialogFragment backPressedDialog = new GameNameDialog();
-            backPressedDialog.show(getFragmentManager(), "BackPressedDialogWithName");
-        }
-        else
-        {
-            DialogFragment backPressedDialog = new CreateTerrainSaveDialog();
-            backPressedDialog.show(getFragmentManager(), "BackPressedDialogTadWithoutName");
-        }*/
-        //TODO ako je WIN situacija pitaj za ime pokreni dialog i Toast sa (POBEDIO SI)
-        //TODO ako je lose situacija samo vrati na mainActivity i Toast sa (IZGUBIO SI)
-        super.onBackPressed();
-    }
-
     public Controller getController() { return controller; }
 
     public DbOperationsHelper getDbOperationsHelper() { return dbOperationsHelper; }

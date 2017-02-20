@@ -32,7 +32,7 @@ public class NewTerrainActivity extends Activity implements View.OnTouchListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_terrain);
-        setTitle("Tilt maze CRETE NEW TERRAIN");
+        setTitle("Tilt maze CREATE NEW TERRAIN");
 
         //create imageView and connect it with model and controller
         polygon=new Polygon(this);

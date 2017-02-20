@@ -80,7 +80,19 @@ public class MainActivity extends Activity
     //CODE FOR LIST VIEW
     public void updateListView(){
         //citaj sve fajlove iz files direktorijuma
-        namesOfTracks = getApplicationContext().getExternalFilesDir(null).list();
+        namesOfTracks = getApplicationContext().getExternalFilesDir(null).list(new java.io.FilenameFilter() {
+            /**
+             * Ovo sam napravio iz razloga sto bez ovoga mi izlistava neke sistemske fajlove iz
+             * default foldera.
+             * @param dir
+             * @param filename
+             * @return
+             */
+            @Override
+            public boolean accept(File dir, String filename) {
+                return !(filename.contains("TEMP"));
+            }
+        });
         adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, namesOfTracks);
         listView.setAdapter(adapter);

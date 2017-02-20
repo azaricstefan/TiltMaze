@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.azaric.tiltmaze.DB.DbOperationsHelper;
 import com.azaric.tiltmaze.Dialog.GameNameDialog;
 
+import java.io.File;
+
 public class GameActivity extends Activity
         implements
         SensorEventListener, Controller.MyPlayer {
@@ -33,6 +35,7 @@ public class GameActivity extends Activity
     private float gameTime = 0;
     private float score;
     private boolean firstTime = true;
+    private boolean firstLaunch = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,19 +73,48 @@ public class GameActivity extends Activity
             controller.loadPolygon("", getApplicationContext());
 
 
+        if(savedInstanceState != null){
+            ///nesto
+            int i = 0;
+        }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        sensorManager.unregisterListener(this);
     }
 
     @Override
     protected void onResume() {
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
+        if(!firstLaunch) {
+            File[] files = getApplicationContext().getExternalFilesDir(null).listFiles();
+            for(int i = 0; i < files.length; i++){
+                if(files[i].getName().equals("TEMP-" + controller.getNameOfPolygonToLoad() + ".tmp")) {
+                    //SHOW DIALOG STARO ILI NOVO?
+                    onCreate(null);
+                    getController().getModel().loadPolygonFromFile(files[i].getName(), this);
+                    getController().getImageView().invalidate();
+                    Log.d("LOAD TMP", "TEMP-" + controller.getNameOfPolygonToLoad() + ".tmp");
+                }
+            }
+        }
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        sensorManager.unregisterListener(this);
         super.onPause();
+        firstLaunch = false;
+        sensorManager.unregisterListener(this);
+        getController().getModel().savePolygon("TEMP-" + controller.getNameOfPolygonToLoad() + ".tmp", this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     //SENSOR METHODS

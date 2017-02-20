@@ -69,6 +69,12 @@ public class StatisticsActivity extends Activity
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.statistics_menu, menu);
         this.menu = menu;
+
+        Intent intent = getIntent();
+        if(intent.hasExtra(STATISTICS_SINGLE_TRACK)) {
+            menu.findItem(R.id.delete_statistic_for_selected_polygon).setVisible(true);
+        }
+
         return true;
     }
 

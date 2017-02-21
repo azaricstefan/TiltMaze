@@ -74,6 +74,9 @@ public class GameActivity extends Activity
         } else
             controller.loadPolygon("", getApplicationContext());
 
+        if(savedInstanceState != null){
+            controller.nameOfPolygonToLoad = (String) savedInstanceState.get("NAME");
+        }
     }
 
     @Override
@@ -149,6 +152,7 @@ public class GameActivity extends Activity
     }
 
     public String filterTmp(String name) {
+        if(name == null) return "";
         String[] full = name.split(":");
         if (full.length > 1)
             return full[1];
@@ -166,8 +170,14 @@ public class GameActivity extends Activity
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putString("NAME",controller.getNameOfPolygonToLoad());
     }
 
     //SENSOR METHODS

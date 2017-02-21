@@ -78,6 +78,7 @@ public class GameNameDialog extends DialogFragment {
     }
 
     public String filterTmp(String name){
+        if(name == null) return "";
         String[] full = name.split(":");
         if(full.length > 1)
             return full[1];

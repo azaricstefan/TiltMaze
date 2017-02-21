@@ -1,7 +1,8 @@
 package com.azaric.tiltmaze;
 
 /**
- * Created by tamarasekularac on 2/16/17.
+ * Created by Stefan on 2/16/17 | 01:48.
+ * Created in project with name: "Tiltmaze"
  */
 public class Wall {
     double xS, yS, xE, yE;

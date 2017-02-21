@@ -46,7 +46,7 @@ public class GameActivity extends Activity
         startTime = System.currentTimeMillis();
 
         //create model and controller
-        controller = new Controller();
+        controller = new Controller(this);
         model = new Polygon(this,getApplicationContext());
         controller.setModel(model);
 
@@ -172,5 +172,9 @@ public class GameActivity extends Activity
         services.putExtra("naziv", i);
         services.setAction(MyService.ACTION_PLAY);
         startService(services);
+    }
+
+    public double getCurrentGameTime() {
+        return gameTime + (((float)(System.currentTimeMillis() - startTime)) / 1000f);
     }
 }

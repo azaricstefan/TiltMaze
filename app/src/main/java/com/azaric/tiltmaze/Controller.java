@@ -11,14 +11,26 @@ import android.util.Log;
  */
 
 public class Controller {
-    public interface MyPlayer{
-        void play(int i);
-    }
 
     Polygon model;
     MyImageView imageView;
     private long lastMesurement=-1;
     String nameOfPolygonToLoad;
+    GameActivity myGameActivity;
+
+    public Controller(GameActivity gameActivity){
+        myGameActivity = gameActivity;
+    }
+
+    public String getTime() {
+        double time = myGameActivity.getCurrentGameTime();
+        return String.format("%.2f", time);
+    }
+
+    public interface MyPlayer{
+        void play(int i);
+    }
+
 
     @CheckResult
     public Polygon getModel() {

@@ -75,6 +75,11 @@ public class MyImageView extends ImageView{
             if (model.getBall() != null)
                 canvas.drawCircle((float) model.getBall().getX() * height, (float) model.getBall().getY() * height,
                         (float) model.getrBall() * height, paintWhite);
+
+            Paint textPaintWhite = new Paint();
+            textPaintWhite.setColor(Color.WHITE);
+            textPaintWhite.setTextSize(50);
+            canvas.drawText(controller.getTime(),(float)0.5*width,(float)0.05*height,textPaintWhite);
         }
     }
 

@@ -53,7 +53,7 @@ public class GameNameDialog extends DialogFragment {
                                 .getDbOperationsHelper()
                                 .insert(
                                         playerName.getText().toString(),
-                                        myActivity.getController().getNameOfPolygonToLoad(),
+                                        filterTmp(myActivity.getController().getNameOfPolygonToLoad()),
                                         myActivity.getScore());
                         getActivity().finish();
                         startStatisticsActivity();
@@ -74,6 +74,13 @@ public class GameNameDialog extends DialogFragment {
         Intent intent = new Intent(myActivity, StatisticsActivity.class);
         intent.putExtra(StatisticsActivity.STATISTICS_SINGLE_TRACK,polygonName);
         startActivity(intent);
+    }
+
+    public String filterTmp(String name){
+        String[] full = name.split(":");
+        if(full.length > 1)
+            return full[1];
+        return name;
     }
 
     public String getDefaultName(){

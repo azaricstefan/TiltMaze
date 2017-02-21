@@ -64,7 +64,7 @@ public class GameActivity extends Activity
 
 
         //GET intent - which polygon to load
-        //TODO: get info about polygon and load it
+        //get info about polygon and load it
         Intent intent = getIntent();
         controller.nameOfPolygonToLoad = intent.getStringExtra(MainActivity.NAME_OF_POLYGON);
         if (controller.nameOfPolygonToLoad != null) {
@@ -72,18 +72,14 @@ public class GameActivity extends Activity
         } else
             controller.loadPolygon("", getApplicationContext());
 
-
-        if(savedInstanceState != null){
-            ///nesto
-            int i = 0;
-        }
-
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         sensorManager.unregisterListener(this);
+        if(!model.isGameOver())
+            getController().getModel().savePolygon("TEMP:" + controller.getNameOfPolygonToLoad() + ":tmp", this);
     }
 
     @Override
@@ -92,12 +88,11 @@ public class GameActivity extends Activity
         if(!firstLaunch) {
             File[] files = getApplicationContext().getExternalFilesDir(null).listFiles();
             for(int i = 0; i < files.length; i++){
-                if(files[i].getName().equals("TEMP-" + controller.getNameOfPolygonToLoad() + ".tmp")) {
-                    //SHOW DIALOG STARO ILI NOVO?
+                if(files[i].getName().equals("TEMP:" + controller.getNameOfPolygonToLoad() + ":tmp")) {
                     onCreate(null);
                     getController().getModel().loadPolygonFromFile(files[i].getName(), this);
                     getController().getImageView().invalidate();
-                    Log.d("LOAD TMP", "TEMP-" + controller.getNameOfPolygonToLoad() + ".tmp");
+                    Log.d("LOAD TMP", "TEMP:" + controller.getNameOfPolygonToLoad() + ":tmp");
                 }
             }
         }
@@ -109,7 +104,8 @@ public class GameActivity extends Activity
         super.onPause();
         firstLaunch = false;
         sensorManager.unregisterListener(this);
-        getController().getModel().savePolygon("TEMP-" + controller.getNameOfPolygonToLoad() + ".tmp", this);
+        if(!model.isGameOver())
+            getController().getModel().savePolygon("TEMP:" + controller.getNameOfPolygonToLoad() + ":tmp", this);
     }
 
     @Override
@@ -129,6 +125,7 @@ public class GameActivity extends Activity
         if(gameOver && firstTime){
             if(model.isWin()) {
                 firstTime = false;
+                firstLaunch = false;
                 endTime = System.currentTimeMillis();
                 score = getGameTime();
                 Toast t;
@@ -138,9 +135,17 @@ public class GameActivity extends Activity
                 DialogFragment nameDialog = new GameNameDialog();
                 nameDialog.show(getFragmentManager(), "nameDialog");
             } else {
+                firstLaunch = false;
                 Toast t;
                 t = Toast.makeText(this, R.string.game_lost,Toast.LENGTH_SHORT);
                 t.show();
+                if(controller.nameOfPolygonToLoad.contains("TEMP")) {
+                    File[] files = getApplicationContext().getExternalFilesDir(null).listFiles();
+                    for(int i = 0; i < files.length; i++){
+                        if(files[i].getName().equals(controller.nameOfPolygonToLoad))
+                            files[i].delete();
+                    }
+                }
                 finish();
             }
         }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.azaric.tiltmaze.Dialog.MainDialogItemLongClick;
+import com.azaric.tiltmaze.Dialog.MainDialogItemTmpLoad;
 
 import java.io.File;
 
@@ -31,6 +33,7 @@ public class MainActivity extends Activity
 
     String[] namesOfTracks;
     String nameOfTrack = null;
+    private String tmpName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +111,7 @@ public class MainActivity extends Activity
     }
 
 
-    private void startGameActivity(String drawingNameToOpen){
+    public void startGameActivity(String drawingNameToOpen){
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra(NAME_OF_POLYGON, drawingNameToOpen);
         startActivity(intent);
@@ -124,6 +127,17 @@ public class MainActivity extends Activity
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String nameOfTrack = (String) parent.getItemAtPosition(position);
+        File[] files = getApplicationContext().getExternalFilesDir(null).listFiles();
+        for(int i = 0; i < files.length; i++){
+            if(files[i].getName().equals("TEMP:" + nameOfTrack + ":tmp")) {
+                Log.d("CLICK LOAD TMP", "TEMP:" + nameOfTrack + ":tmp");
+                tmpName = nameOfTrack;
+                DialogFragment mainDialogItemTmpLoad = new MainDialogItemTmpLoad();
+                mainDialogItemTmpLoad.show(getFragmentManager(), "mainDialogItemTmpLoad");
+                //startGameActivity("TEMP:" + nameOfTrack + ":tmp");
+                return;
+            }
+        }
         startGameActivity(nameOfTrack);
     }
 
@@ -145,5 +159,9 @@ public class MainActivity extends Activity
             if(files[i].getName().equals(polygonName))
                 files[i].delete();
         }
+    }
+
+    public String getTmpName() {
+        return tmpName;
     }
 }

@@ -44,8 +44,9 @@ public class GameNameDialog extends DialogFragment {
 
         playerName.setText(getDefaultName());
 
+        final float score = myActivity.getScore();
         builder.setMessage(R.string.GameNameMessage)
-                .setTitle(R.string.GameNameTitle)
+                .setTitle("You have won!" + "SCORE: " + score)
                 .setView(playerName)
                 .setPositiveButton(R.string.Dialog_OK, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -54,7 +55,7 @@ public class GameNameDialog extends DialogFragment {
                                 .insert(
                                         playerName.getText().toString(),
                                         filterTmp(myActivity.getController().getNameOfPolygonToLoad()),
-                                        myActivity.getScore());
+                                        score);
                         getActivity().finish();
                         startStatisticsActivity();
                     }

@@ -79,7 +79,8 @@ public class MyImageView extends ImageView{
             Paint textPaintWhite = new Paint();
             textPaintWhite.setColor(Color.WHITE);
             textPaintWhite.setTextSize(50);
-            canvas.drawText(controller.getTime(),(float)0.5*width,(float)0.05*height,textPaintWhite);
+            if(!model.isGameOver())
+                canvas.drawText(controller.getTime(),(float)0.5*width,(float)0.05*height,textPaintWhite);
         }
     }
 

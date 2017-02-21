@@ -155,13 +155,14 @@ public class GameActivity extends Activity
         return name;
     }
 
-    public void deleteTmpPolygon() {
+    public boolean deleteTmpPolygon() {
         File[] files = getApplicationContext().getExternalFilesDir(null).listFiles();
         for (int i = 0; i < files.length; i++) {
             if (files[i].getName().equals("TEMP:" + filterTmp(controller.getNameOfPolygonToLoad()) + ":tmp")) {
-                files[i].delete();
+                return files[i].delete();
             }
         }
+        return false;
     }
 
     @Override
@@ -191,27 +192,29 @@ public class GameActivity extends Activity
                 //otvori dialog
                 DialogFragment nameDialog = new GameNameDialog();
                 nameDialog.show(getFragmentManager(), "nameDialog");
+                new DeleteFileAsyncTask().execute();
             } else {
                 if (firstLaunch) {
                     firstLaunch = false;
                     Toast t;
                     t = Toast.makeText(getApplicationContext(), R.string.game_lost, Toast.LENGTH_SHORT);
                     t.show();
-                    new AsyncTask<Void, Void, Void>() {
+                    new DeleteFileAsyncTask().execute();
 
-                        @Override
-                        protected Void doInBackground(Void... params) {
-                            deleteTmpPolygon();
-                            Log.d("PUCA", "OVDE");
-                            return null;
-                        }
-                    }.execute();
-                    //deleteTmpPolygon();
                     finish();
                 }
             }
         }
 
+    }
+
+    public class DeleteFileAsyncTask extends AsyncTask<Void,Void,Boolean>{
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            Log.d("DELETE async", "CALL");
+            return deleteTmpPolygon();
+        }
     }
 
     @Override

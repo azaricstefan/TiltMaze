@@ -46,7 +46,7 @@ public class GameNameDialog extends DialogFragment {
 
         final float score = myActivity.getScore();
         builder.setMessage(R.string.GameNameMessage)
-                .setTitle("You have won!" + "SCORE: " + score)
+                .setTitle("You have won!" + " TIME: " + String.format("%.2f", score))
                 .setView(playerName)
                 .setPositiveButton(R.string.Dialog_OK, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

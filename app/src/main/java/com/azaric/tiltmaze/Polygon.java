@@ -32,6 +32,15 @@ public class Polygon {
     private boolean win;
 
     private final Context context;
+    private long gameTime;
+
+    public long getGameTime() {
+        return gameTime;
+    }
+
+    public void setGameTime(long gameTime) {
+        this.gameTime = gameTime;
+    }
 
     public Polygon(Controller.MyPlayer myPlayer, Context context) {
         this.myPlayer = myPlayer;
@@ -244,6 +253,9 @@ public class Polygon {
                 writer.append(stringWall); //WALL
             }
 
+            //TIME
+            writer.append(gameTime + "\n");
+
             writer.flush();
             writer.close();
         } catch (IOException e) {
@@ -312,6 +324,11 @@ public class Polygon {
                         Double.parseDouble(loadedXend), Double.parseDouble(loadedYend));
                 walls.add(w);
             }
+
+            //READ TIME
+            String tmpString = bufferedReader.readLine();
+            if (tmpString != null)
+                gameTime = Long.parseLong(tmpString);
 
 
         } catch (NumberFormatException nfe) {

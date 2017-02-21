@@ -33,11 +33,13 @@ public class MyService extends Service implements
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        int i=intent.getExtras().getInt("naziv");
-        if (intent.getAction().equals(ACTION_PLAY))
-            mediaPlayer[i].start();
-        else if (intent.getAction().equals(ACTION_PAUSE))
-            mediaPlayer[i].pause();
+        if(intent != null) {
+            int i = intent.getExtras().getInt("naziv");
+            if (intent.getAction().equals(ACTION_PLAY))
+                mediaPlayer[i].start();
+            else if (intent.getAction().equals(ACTION_PAUSE))
+                mediaPlayer[i].pause();
+        }
         return START_STICKY;
     }
 

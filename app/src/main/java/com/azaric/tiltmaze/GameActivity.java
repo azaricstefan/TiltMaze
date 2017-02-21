@@ -69,6 +69,8 @@ public class GameActivity extends Activity
         controller.nameOfPolygonToLoad = intent.getStringExtra(MainActivity.NAME_OF_POLYGON);
         if (controller.nameOfPolygonToLoad != null) {
             model.loadPolygonFromFile(controller.nameOfPolygonToLoad,this);
+            long num = model.getGameTime();
+            setGameTime(num);
         } else
             controller.loadPolygon("", getApplicationContext());
 
@@ -78,8 +80,10 @@ public class GameActivity extends Activity
     public void onBackPressed() {
         super.onBackPressed();
         sensorManager.unregisterListener(this);
-        if(!model.isGameOver())
+        if(!model.isGameOver()) {
+            getController().getModel().setGameTime((System.currentTimeMillis() - startTime) / 1000);
             getController().getModel().savePolygon("TEMP:" + controller.getNameOfPolygonToLoad() + ":tmp", this);
+        }
     }
 
     @Override
@@ -91,6 +95,10 @@ public class GameActivity extends Activity
                 if(files[i].getName().equals("TEMP:" + controller.getNameOfPolygonToLoad() + ":tmp")) {
                     onCreate(null);
                     getController().getModel().loadPolygonFromFile(files[i].getName(), this);
+                    long num = getController().getModel().getGameTime();
+                    setGameTime(num);
+                    //num *= 1000;
+                    //setStartTime(num);
                     getController().getImageView().invalidate();
                     Log.d("LOAD TMP", "TEMP:" + controller.getNameOfPolygonToLoad() + ":tmp");
                 }
@@ -104,8 +112,10 @@ public class GameActivity extends Activity
         super.onPause();
         firstLaunch = false;
         sensorManager.unregisterListener(this);
-        if(!model.isGameOver())
+        if(!model.isGameOver()) {
+            getController().getModel().setGameTime((System.currentTimeMillis() - startTime) / 1000);
             getController().getModel().savePolygon("TEMP:" + controller.getNameOfPolygonToLoad() + ":tmp", this);
+        }
     }
 
     @Override
@@ -121,6 +131,7 @@ public class GameActivity extends Activity
         long time = event.timestamp;
 
         controller.addNewAccelerometerValues(x, y, time);
+        getController().getModel().setGameTime((System.currentTimeMillis() - startTime) / 1000);
         boolean gameOver = model.isGameOver();
         if(gameOver && firstTime){
             if(model.isWin()) {
@@ -176,5 +187,9 @@ public class GameActivity extends Activity
 
     public double getCurrentGameTime() {
         return gameTime + (((float)(System.currentTimeMillis() - startTime)) / 1000f);
+    }
+
+    public void setGameTime(float gameTime) {
+        this.gameTime = gameTime;
     }
 }

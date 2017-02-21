@@ -83,7 +83,7 @@ public class GameActivity extends Activity
         sensorManager.unregisterListener(this);
         if(!model.isGameOver()) {
             getController().getModel().setGameTime((System.currentTimeMillis() - startTime) / 1000);
-            getController().getModel().savePolygon("TEMP:" + controller.getNameOfPolygonToLoad() + ":tmp", this);
+            getController().getModel().savePolygon("TEMP:" + filterTmp(controller.getNameOfPolygonToLoad()) + ":tmp", this);
         }
     }
 
@@ -144,15 +144,22 @@ public class GameActivity extends Activity
         sensorManager.unregisterListener(this);
         if(!model.isGameOver()) {
             getController().getModel().setGameTime((System.currentTimeMillis() - startTime) / 1000);
-            getController().getModel().savePolygon("TEMP:" + controller.getNameOfPolygonToLoad() + ":tmp", this);
+            getController().getModel().savePolygon("TEMP:" + filterTmp(controller.getNameOfPolygonToLoad()) + ":tmp", this);
 
         }
+    }
+
+    public String filterTmp(String name){
+        String[] full = name.split(":");
+        if(full.length > 1)
+            return full[1];
+        return name;
     }
 
     public void deleteTmpPolygon(){
         File[] files = getApplicationContext().getExternalFilesDir(null).listFiles();
         for(int i = 0; i < files.length; i++){
-            if(files[i].getName().equals("TEMP:" + controller.getNameOfPolygonToLoad() + ":tmp")) {
+            if(files[i].getName().equals("TEMP:" + filterTmp(controller.getNameOfPolygonToLoad()) + ":tmp")) {
                 files[i].delete();
             }
         }
@@ -190,15 +197,15 @@ public class GameActivity extends Activity
                 Toast t;
                 t = Toast.makeText(getApplicationContext(), R.string.game_lost,Toast.LENGTH_SHORT);
                 t.show();
-                new AsyncTask<Void,Void,Void>(){
-
-                    @Override
-                    protected Void doInBackground(Void... params) {
-                        deleteTmpPolygon();
-                        Log.d("PUCA", "OVDE");
-                        return null;
-                    }
-                }.execute();
+//                new AsyncTask<Void,Void,Void>(){
+//
+//                    @Override
+//                    protected Void doInBackground(Void... params) {
+//                        deleteTmpPolygon();
+//                        Log.d("PUCA", "OVDE");
+//                        return null;
+//                    }
+//                }.execute();
                 deleteTmpPolygon();
 //                if(controller.nameOfPolygonToLoad.contains("TEMP")) {
 //                    File[] files = getApplicationContext().getExternalFilesDir(null).listFiles();

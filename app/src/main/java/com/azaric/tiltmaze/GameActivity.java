@@ -198,7 +198,7 @@ public class GameActivity extends Activity
                         Log.d("PUCA", "OVDE");
                         return null;
                     }
-                };
+                }.execute();
                 deleteTmpPolygon();
 //                if(controller.nameOfPolygonToLoad.contains("TEMP")) {
 //                    File[] files = getApplicationContext().getExternalFilesDir(null).listFiles();

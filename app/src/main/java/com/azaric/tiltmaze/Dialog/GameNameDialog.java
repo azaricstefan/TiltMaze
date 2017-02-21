@@ -70,7 +70,7 @@ public class GameNameDialog extends DialogFragment {
     }
 
     public void startStatisticsActivity(){
-        String polygonName = myActivity.getController().getNameOfPolygonToLoad();
+        String polygonName = filterTmp(myActivity.getController().getNameOfPolygonToLoad());
         Intent intent = new Intent(myActivity, StatisticsActivity.class);
         intent.putExtra(StatisticsActivity.STATISTICS_SINGLE_TRACK,polygonName);
         startActivity(intent);
